@@ -1,0 +1,5 @@
+requests_futures
+matplotlib
+numpy
+pandas
+scipy

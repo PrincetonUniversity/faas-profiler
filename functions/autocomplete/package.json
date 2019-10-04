@@ -1,0 +1,26 @@
+{
+  "name": "openwhisk-autocomplete",
+  "description": "Utility to convert a text file of strings into a autocomplete API powered by serverless OpenWhisk",
+  "version": "1.1.1",
+  "main": "autocomplete.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "Glynn Bird <glynn.bird@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "tmp": "0.0.33"
+  },
+  "bin": {
+    "acsetup": "bin/acsetup.js"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "keywords": []
+}
