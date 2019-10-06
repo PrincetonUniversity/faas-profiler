@@ -18,7 +18,7 @@ python WorkloadAnalyzer.py -r -p
     4. `-a` or `--archive`: archive the test results in an pickle file (in the `data_archive` directory)
     5. `-c` or `--capacity_factor`: returns the capacity factor for functions in the workload (stored as JSON in `workload-analyzer/capacity_factors.json`)
     6. `-o` or `--override_testname`: this option is followed by the new test name. Allows assigning new names to tests, which is specifically useful for archivning with desired names.
-    7. `-r` or `--read_results`: gather also the results of function invocations
+    7. `-r` or `--read_results`: also gather the results of function invocations
 4. Analysis logs can be found in `../logs/WA.log`.
 
 ## Required Packages (beyond standard libraries)
