@@ -1,0 +1,9 @@
+# local config file
+GenConfigs.py
+
+# logs and data archives
+*.log
+*.pkl
+
+# compiled bytecode
+__pycache__/
