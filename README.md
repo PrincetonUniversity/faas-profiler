@@ -94,4 +94,3 @@ Python Library | Tested Version
 requests-futures | 0.9.9
 numpy | 1.16.2
 pandas | 0.23.4
-scipy | 1.1.0
