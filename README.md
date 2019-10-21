@@ -15,7 +15,9 @@ Mohammad Shahrad, Jonathan Balkind, and David Wentzlaff. "[Architectural Implica
 
 FaaSProfiler has been fully tested on [OpenWhisk](https://github.com/apache/openwhisk). Please make sure to set up and install [OpenWhisk](https://github.com/apache/openwhisk) before using FaaSProfiler.
 
-Note: We plan to add support for other popular serverless platforms. Help from the community is highly appreciated.
+**Important Note**: Some of the default [OpenWhisk configuration](https://github.com/apache/openwhisk/blob/master/ansible/group_vars/all) limits might be too restrictive for your setup. Do not forget to configure those parameters (particularly these: `invocationsPerMinute`, `concurrentInvocations`, `firesPerMinute`, and `sequenceMaxLength`).
+
+**Note**: We plan to add support for other popular serverless platforms. Help from the community is highly appreciated.
 
 ### Configure  FaaSProfiler
 
