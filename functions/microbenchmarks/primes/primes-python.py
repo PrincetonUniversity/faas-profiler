@@ -9,7 +9,6 @@ import sys
 def main(params):
     """
     standard optimized sieve algorithm to get a list of prime numbers
-    --- this is the function to compare your functions against! ---
     """
     n = 10000000
 

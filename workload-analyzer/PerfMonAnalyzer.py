@@ -21,7 +21,7 @@ logger = ScriptLogger(loggername='workload_analyzer/perf_mon_analyzer',
 
 def ReadPQOSMSRMon(pqos_msr_mon_file):
     """
-    This functions parses the output of the pqos-msr-mon.
+    This function parses the output of the pqos-msr-mon.
     """
     with open(pqos_msr_mon_file) as f:
         lines = f.readlines()
@@ -77,7 +77,7 @@ def ReadPQOSMSRMon(pqos_msr_mon_file):
 
 def ReadPerfMon(perf_mon_file):
     """
-    This functions parses the output of the Linux Perf tool.
+    This function parses the output of the Linux Perf tool.
     """
     with open(perf_mon_file) as f:
         lines = f.readlines()
