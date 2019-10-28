@@ -3,7 +3,7 @@ This sentiment analysis function uses the [Python TextBlob library](https://text
 To create the function:
 
 ```
-wsk action create sentiment sentiment.py --docker immortalfaas/python3action --web raw -i
+wsk action create sentiment sentiment.py --docker immortalfaas/sentiment --web raw -i
 ```
 
 To invoke the function, you can use the `wsk` CLI. Specify an "analyse" parameter and the string you wish to evaluate the sentiment of.
