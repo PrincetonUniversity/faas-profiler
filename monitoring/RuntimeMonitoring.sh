@@ -1,4 +1,4 @@
-if [[$1 -eq '']]; then
+if [[ $1 -eq '' ]]; then
     echo "The length of the test should be provided as the first input argument."
     exit 1
 fi 
