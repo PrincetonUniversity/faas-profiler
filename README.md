@@ -23,7 +23,7 @@ FaaSProfiler has been fully tested on [OpenWhisk](https://github.com/apache/open
 
 After cloning this repo run the one-time configuration:
 ```
-bash Configure.sh
+bash configure.sh
 ```
 
 ## Usage Guide
