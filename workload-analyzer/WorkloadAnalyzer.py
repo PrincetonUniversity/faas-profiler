@@ -89,6 +89,10 @@ def ConstructTestDataframe(since, limit=1000, read_results=False):
         perf_data['results'] = []
 
     activations = GetActivationRecordsSince(since=since, limit=limit)
+    if 'error' in activations.keys():
+        print('Encountered an error getting data from the DB! Check the logs for more info.')
+        logger.error('DB error: ' + activations['reason'])
+        return None
     activations = activations['docs']
 
     for activation in activations:
@@ -265,6 +269,9 @@ def main(argv):
     read_results = True if options.read_results else False
     test_df = ConstructTestDataframe(since=test_start_time, limit=100000, 
                                      read_results=read_results)
+    if (test_df is None):
+        logger.error('Test result dataframe could not be constructed!')
+        return False
     print('Records read from CouchDB: ' + str(len(test_df['start'])))
 
     invocation_periods = []
