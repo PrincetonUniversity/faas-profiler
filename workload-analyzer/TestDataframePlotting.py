@@ -23,34 +23,23 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     dims = {'s': 'start', 'd': 'duration',
             'wt': 'waitTime', 'it': 'initTime', 'l': 'latency'}
 
-    test_df['CTX_s_voluntary'] = test_df['results'].apply(lambda x: x['NCTX_s'][0])
-    test_df['CTX_s_involuntary'] = test_df['results'].apply(lambda x: x['NCTX_s'][1])
-    test_df['CTX_e_voluntary'] = test_df['results'].apply(lambda x: x['NCTX_e'][0])
-    test_df['CTX_e_involuntary'] = test_df['results'].apply(lambda x: x['NCTX_e'][1])
-    test_df['CTX_voluntary'] = test_df['results'].apply(lambda x: x['NCTX_e'][0] - x['NCTX_s'][0])
-    test_df['CTX_involuntary'] = test_df['results'].apply(lambda x: x['NCTX_e'][1] - x['NCTX_s'][1])
     print(test_df)
 
-    # color_palette = sns.color_palette('Set1')
-    # test_df.plot(kind='scatter', x=dims['s'], y=dims['d'],
-    #              c=color_palette[0], alpha=0.5, ax=ax, label='Run Time', marker='*')
-    # test_df.plot(kind='scatter', x=dims['s'], y=dims['it'],
-    #              c=color_palette[1], alpha=0.5, ax=ax, label='Initiation Time', marker='^')
-    # test_df.plot(kind='scatter', x=dims['s'], y=dims['wt'],
-    #              c=color_palette[2], alpha=0.5, ax=ax, label='Wait Time', marker='v')
-    # test_df.plot(kind='scatter', x=dims['s'], y=dims['l'],
-    #              c=color_palette[3], alpha=0.5, ax=ax, label='Total Latency', marker='o')
-    # ax.set_xlabel('Invocation Time (s)')
-    # ax.set_ylabel('Time (ms)')
+    color_palette = sns.color_palette('Set1')
+    test_df.plot(kind='scatter', x=dims['s'], y=dims['d'],
+                 c=color_palette[0], alpha=0.5, ax=ax, label='Run Time', marker='*')
+    test_df.plot(kind='scatter', x=dims['s'], y=dims['it'],
+                 c=color_palette[1], alpha=0.5, ax=ax, label='Initiation Time', marker='^')
+    test_df.plot(kind='scatter', x=dims['s'], y=dims['wt'],
+                 c=color_palette[2], alpha=0.5, ax=ax, label='Wait Time', marker='v')
+    test_df.plot(kind='scatter', x=dims['s'], y=dims['l'],
+                 c=color_palette[3], alpha=0.5, ax=ax, label='Total Latency', marker='o')
+    ax.set_xlabel('Invocation Time (s)')
+    ax.set_ylabel('Time (ms)')
     # sns.scatterplot(data=test_df, x=dims['s'], y=dims['wt'], hue='func_name', ax=ax, marker='v')
     # sns.scatterplot(data=test_df, x=dims['s'],
     #                 y='CTX_voluntary', 
     #                 hue='func_name', ax=ax, marker='^')
-    sns.scatterplot(data=test_df, x='duration',
-                    y='CTX_involuntary', 
-                    hue='func_name', ax=ax, marker='v')
-    ax.set_xlabel('Duration (ms)')
-    ax.set_ylabel('Involuntary Context Switches')
     
     # if cgroups_df is None:
     #     fig, axs = plt.subplots(ncols=2)
