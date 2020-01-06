@@ -10,7 +10,7 @@ import random
 
 from commons.Logger import ScriptLogger
 
-logger = ScriptLogger('workload_invoker', 'SWI.log')
+logger_eg = ScriptLogger('event_generator', 'SWI.log')
 
 
 def CreateEvents(instance, dist, rate, duration, seed=None):
@@ -57,19 +57,19 @@ def GenericEventGenerator(workload):
     """
     This function returns a list of times and applications calls given a workload description.
     """
-    logger.info("Started Generic Event Generator")
+    logger_eg.info("Started Generic Event Generator")
     test_duration_in_seconds = workload['test_duration_in_seconds']
 
     all_events = {}
     event_count = 0
 
     random_seed = workload['random_seed']
-    logger.info('random_seed: ' + str(random_seed))
+    logger_eg.info('random_seed: ' + str(random_seed))
 
     for (instance, desc) in workload['instances'].items():
         if 'interarrivals_list' in desc.keys():
             instance_events = desc['interarrivals_list']
-            logger.info('Read the invocation time trace for ' + instance)
+            logger_eg.info('Read the invocation time trace for ' + instance)
             # enforcing maximum test duration
             list_len = 0
             cutoff_index = None
@@ -98,6 +98,6 @@ def GenericEventGenerator(workload):
         all_events[instance] = instance_events
         event_count += len(instance_events)
 
-    logger.info("Returning workload event list")
+    logger_eg.info("Returning workload event list")
 
     return [all_events, event_count]
