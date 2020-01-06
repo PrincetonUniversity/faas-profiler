@@ -34,11 +34,13 @@ supported_distributions = {'Poisson', 'Uniform'}
 logger = ScriptLogger('workload_invoker', 'SWI.log')
 
 
-APIHOST = 'https://172.17.0.1'
+APIHOST = subprocess.check_output(WSK_PATH + " property get --apihost", shell=True).split()[3]
+APIHOST = 'https://' + APIHOST.decode("utf-8")
 AUTH_KEY = subprocess.check_output(WSK_PATH + " property get --auth", shell=True).split()[2]
 AUTH_KEY = AUTH_KEY.decode("utf-8")
 user_pass = AUTH_KEY.split(':')
-NAMESPACE = '_'
+NAMESPACE = subprocess.check_output(WSK_PATH + " property get --namespace", shell=True).split()[2]
+NAMESPACE = NAMESPACE.decode("utf-8")
 RESULT = 'false'
 base_url = APIHOST + '/api/v1/namespaces/' + NAMESPACE + '/actions/'
 base_gust_url = APIHOST + '/api/v1/web/guest/default/'
