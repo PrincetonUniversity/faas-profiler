@@ -70,6 +70,16 @@ def GenericEventGenerator(workload):
         if 'interarrivals_list' in desc.keys():
             instance_events = desc['interarrivals_list']
             logger.info('Read the invocation time trace for ' + instance)
+            # enforcing maximum test duration
+            list_len = 0
+            cutoff_index = None
+            for i in range(len(instance_events)):
+                list_len += instance_events[i]
+                if list_len > test_duration_in_seconds:
+                    cutoff_index = i
+                    break
+            if cutoff_index is not None:
+                instance_events = instance_events[:cutoff_index]
         else:
             instance_events = CreateEvents(instance=instance,
                                            dist=desc['distribution'],
