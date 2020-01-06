@@ -2,3 +2,4 @@ requests_futures
 matplotlib
 numpy
 pandas
+seaborn
