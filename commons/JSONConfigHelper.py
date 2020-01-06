@@ -6,7 +6,6 @@
 import json
 import os
 import sys
-import yaml
 
 # Local imports
 sys.path = ['./', '../'] + sys.path
@@ -31,7 +30,7 @@ def ReadJSONConfig(json_file):
     workload = None
     try:
         with open(json_file) as f:
-            workload = yaml.safe_load(f)
+            workload = json.load(f)
     except:
         print("The JSON config file cannot be read")
 
