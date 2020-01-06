@@ -18,8 +18,7 @@
         },
         "instance3":{
             "application": "example_app2",
-            "interarrivals_list": [5,0.13,0.15,0.8,0.1,0.13,0.13,0.1,0.4],
-            "activity_window": [5, 10]
+            "interarrivals_list": [5,0.13,0.15,0.8,0.1,0.13,0.13,0.1,0.4]
         },
         "instance4":{
             "application": "example_app3",

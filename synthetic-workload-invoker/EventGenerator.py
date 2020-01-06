@@ -86,15 +86,15 @@ def GenericEventGenerator(workload):
                                            rate=desc['rate'],
                                            duration=test_duration_in_seconds,
                                            seed=random_seed)
-        try:
-            start_time = desc['activity_window'][0]
-            end_time = desc['activity_window'][1]
-            instance_events = EnforceActivityWindow(
-                start_time, end_time, instance_events)
-        except:
-            instance_events = EnforceActivityWindow(0,
-                                                    workload['test_duration_in_seconds'],
-                                                    instance_events)
+            try:
+                start_time = desc['activity_window'][0]
+                end_time = desc['activity_window'][1]
+                instance_events = EnforceActivityWindow(
+                    start_time, end_time, instance_events)
+            except:
+                instance_events = EnforceActivityWindow(0,
+                                                        workload['test_duration_in_seconds'],
+                                                        instance_events)
         all_events[instance] = instance_events
         event_count += len(instance_events)
 

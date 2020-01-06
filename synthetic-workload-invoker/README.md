@@ -17,7 +17,7 @@ You need to first specifcy the workload configuration file (Similar to [workload
             2. `rate`: Function invocations per second. For a **Poisson** distribution, this is **lambda**. A rate of zero means no invocations.
         ii. **Trace-based traffic**:
             1. `interarrivals_list`: The list of interarrival times. This mode allows replaying real traces using FaaSProfiler.
-    6. `activity_window`: If set to `null`, the application is invoked during the entire test. By setting a time window, one can limit the activity of the application to a sub-interval of the test.
+    6. `activity_window`: If set to `null`, the application is invoked during the entire test. By setting a time window, one can limit the activity of the application to a sub-interval of the test. There is no need to provide this parameter when using trace-based traffic.
     7. `param_file`: This optional entry allows specifying an input parameter JSON file, similar to option `-P` in WSK CLI.
     8. `data_file`: This optional entry allows specifying binary input files such as images for the function.
 3. Performance monitoring (`perf_monitoring`) field, where you can specify:
