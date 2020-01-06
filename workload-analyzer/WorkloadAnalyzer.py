@@ -273,6 +273,8 @@ def main(argv):
         logger.error('Test result dataframe could not be constructed!')
         return False
     print('Records read from CouchDB: ' + str(len(test_df['start'])))
+    print('Test Dataframe:')
+    print(test_df)
 
     invocation_periods = []
     start_times = []
