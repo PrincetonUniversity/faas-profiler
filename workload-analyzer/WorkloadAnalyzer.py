@@ -96,6 +96,8 @@ def ConstructTestDataframe(since, limit=1000, read_results=False):
     activations = activations['docs']
 
     for activation in activations:
+        if 'invokerHealthTestAction' in activation['name']:
+            continue    # skipping OpenWhisk's health check invocations
         perf_data['func_name'].append(activation['name'])
         perf_data['activationId'].append(activation['_id'])
         perf_data['start'].append(activation['start'])
