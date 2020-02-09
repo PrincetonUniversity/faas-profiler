@@ -197,7 +197,7 @@ def main(argv):
     logger.info("Comparative Analyzer started")
     print("Log file -> logs/CA.log")
 
-    ls_files = os.popen("ls -l " + FAAS_ROOT + "/data_archive/*")
+    ls_files = os.popen("ls -l " + FAAS_ROOT + "/data_archive/*.pkl")
     archive_files = []
     for line in ls_files:
         archive_files.append([line[line.index('data_archive')+13:-1], None])
