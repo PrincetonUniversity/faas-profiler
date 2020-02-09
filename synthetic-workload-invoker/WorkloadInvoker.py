@@ -71,18 +71,20 @@ def PROCESSInstanceGenerator(instance, instance_script, instance_times, blocking
 def HTTPInstanceGenerator(action, instance_times, blocking_cli, param_file=None):
     if len(instance_times) == 0:
         return False
-    url = base_url + action
     session = FuturesSession(max_workers=15)
+    url = base_url + action
+    parameters = {'blocking': blocking_cli, 'result': RESULT}
+    authentication = (user_pass[0], user_pass[1])
     after_time, before_time = 0, 0
 
     if param_file == None:
+        st = 0
         for t in instance_times:
-            st = t - (after_time - before_time)
+            st = st + t - (after_time - before_time)
+            before_time = time.time()
             if st > 0:
                 time.sleep(st)
-            before_time = time.time()
-            future = session.post(url, params={'blocking': blocking_cli, 'result': RESULT}, auth=(
-                user_pass[0], user_pass[1]), verify=False)
+            future = session.post(url, params=parameters, auth=authentication, verify=False)
             after_time = time.time()
     else:   # if a parameter file is provided
         try:
@@ -97,8 +99,8 @@ def HTTPInstanceGenerator(action, instance_times, blocking_cli, param_file=None)
             if st > 0:
                 time.sleep(st)
             before_time = time.time()
-            future = session.post(url, params={'blocking': blocking_cli, 'result': RESULT}, auth=(
-                user_pass[0], user_pass[1]), json=param_file_body, verify=False)
+            future = session.post(url, params=parameters, auth=authentication,
+                                  json=param_file_body, verify=False)
             after_time = time.time()
 
     return True
