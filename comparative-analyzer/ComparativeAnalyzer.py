@@ -131,7 +131,10 @@ def CompareArchives(archive_files, plot):
         except:
             combined_stat_df = stat_df
 
-    # RelativeDegradation(combined_stat_df)
+    try:
+        keys = combined_perf_df_dic.keys()
+    except:
+        combined_perf_df_dic = None
 
     return [combined_test_df, combined_perf_df_dic, combined_stat_df]
 
@@ -225,8 +228,7 @@ def main(argv):
                 cp = cp[2:]
             cp = cp[cp.index('/') + 1:]
         module = __import__(cp)
-        module.ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic,
-                                   meta_df=combined_stat_df)
+        module.ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
 
     return True
 
