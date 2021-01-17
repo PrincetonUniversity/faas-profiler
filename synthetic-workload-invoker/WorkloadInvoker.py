@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 
 # Copyright (c) 2019 Princeton University
 #
@@ -147,7 +147,7 @@ def main(argv):
     (options, args) = parser.parse_args()
 
     if not CheckJSONConfig(options.config_json):
-        logger.error("Invalid or no JSON config file!")
+        logger.error("You should specify a JSON config file using -c option!")
         return False    # Abort the function if json file not valid
 
     workload = ReadJSONConfig(options.config_json)

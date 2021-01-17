@@ -84,14 +84,15 @@ The [Comparative Analyzer](./comparative-analyzer) module compares the results o
 
 ## Latest Tested Environments 
 
-Environment/Tool | Tested Version 
+Environment/Tool | Tested Version(s)
 ---------------- | --------------
-Python | 3.6.5 & 3.6.8
-OS | Ubuntu 16.04.4 LTS
+Python | Python 3.x
+OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS
 
-Python Library | Tested Version 
+Python Library | Latest Tested Version
 ---------------- | --------------
-requests-futures | 0.9.9
-numpy | 1.16.2
-pandas | 0.23.4
-seaborn | 0.9.0 
+requests-futures | 1.0.0
+matplotlib | 3.3.3
+numpy | 1.19.5
+pandas | 1.2.0
+seaborn | 0.11.1
