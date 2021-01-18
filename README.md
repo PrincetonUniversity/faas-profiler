@@ -64,7 +64,7 @@ Test logs can be found in `logs/SWI.log`.
 
 ### Analyze the Test
 
-The [Workload Analyzer](workload-analyzer) module analyzes a workload after it is run. Here is how to use it:
+The [Workload Analyzer](workload_analyzer) module analyzes a workload after it is run. Here is how to use it:
 
 1. Run the Workload Analyzer:
 ```
@@ -80,7 +80,7 @@ The [Workload Analyzer](workload-analyzer) module analyzes a workload after it i
 
 ### Compare Archived Tests
 
-The [Comparative Analyzer](./comparative-analyzer) module compares the results of tests archived in the `data_archive` directory.
+The [Comparative Analyzer](./comparative_analyzer) module compares the results of tests archived in the `data_archive` directory.
 
 ## Latest Tested Environments 
 

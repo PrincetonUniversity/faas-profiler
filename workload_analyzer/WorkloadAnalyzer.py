@@ -331,7 +331,7 @@ def main(argv):
         pickle.dump([test_name, config_df, stat_df, test_df,
                      perf_mon_records], open(file_name, "wb"))
     if options.capacity_factor:
-        with open(FAAS_ROOT + '/workload-analyzer/capacity_factors.json', 'w') as outfile:
+        with open(FAAS_ROOT + '/workload_analyzer/capacity_factors.json', 'w') as outfile:
             json.dump(CapacityFactor(test_df), outfile)
 
     print('Performance Summary')
