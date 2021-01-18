@@ -15,17 +15,16 @@ import pandas as pd
 import pickle
 import sys
 
-sys.path = ['./', '../'] + sys.path
-
 # Local
+sys.path = ['./', '../'] + sys.path
 from GenConfigs import *
-from ContactDB import GetActivationRecordsSince
+sys.path = [FAAS_ROOT, FAAS_ROOT+'/commons', FAAS_ROOT+'/workload_analyzer'] + sys.path
 from Logger import ScriptLogger
 from PerfMonAnalyzer import *
 from TestDataframePlotting import *
 
 logger = ScriptLogger(loggername='workload_analyzer',
-                      filename=FAAS_ROOT+'/logs/WA.log')
+                      logfile='WA.log')
 
 
 def GetTestMetadata(test_metadata_file=FAAS_ROOT+"/synthetic_workload_invoker/test_metadata.out"):
@@ -83,6 +82,7 @@ def ConstructTestDataframe(since, limit=1000, read_results=False):
     """
     Constructs a dataframe for the performance information of all invocations.
     """
+    from ContactDB import GetActivationRecordsSince
     perf_data = {'func_name': [], 'activationId': [], 'start': [], 'end': [
     ], 'duration': [], 'waitTime': [], 'initTime': [], 'latency': [], 'lang': []}
     if read_results:
