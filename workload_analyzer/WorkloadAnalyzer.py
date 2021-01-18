@@ -28,12 +28,12 @@ logger = ScriptLogger(loggername='workload_analyzer',
                       filename=FAAS_ROOT+'/logs/WA.log')
 
 
-def GetTestMetadata():
+def GetTestMetadata(test_metadata_file=FAAS_ROOT+"/synthetic_workload_invoker/test_metadata.out"):
     """
     Returns the test start time from the output log of SWI.
     """
     test_start_time = None
-    with open(FAAS_ROOT+"/synthetic_workload_invoker/test_metadata.out") as f:
+    with open(test_metadata_file) as f:
         lines = f.readlines()
         test_start_time = lines[0]
         config_file = lines[1]
