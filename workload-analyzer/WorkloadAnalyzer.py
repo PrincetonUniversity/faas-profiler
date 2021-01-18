@@ -33,7 +33,7 @@ def GetTestMetadata():
     Returns the test start time from the output log of SWI.
     """
     test_start_time = None
-    with open(FAAS_ROOT+"/synthetic-workload-invoker/test_metadata.out") as f:
+    with open(FAAS_ROOT+"/synthetic_workload_invoker/test_metadata.out") as f:
         lines = f.readlines()
         test_start_time = lines[0]
         config_file = lines[1]

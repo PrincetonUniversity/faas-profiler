@@ -20,7 +20,7 @@ import logging
 # Local imports
 sys.path = ['./', '../'] + sys.path
 from GenConfigs import *
-sys.path = [FAAS_ROOT + '/synthetic-workload-invoker'] + sys.path
+sys.path = [FAAS_ROOT + '/synthetic_workload_invoker'] + sys.path
 from EventGenerator import GenericEventGenerator
 from commons.JSONConfigHelper import CheckJSONConfig, ReadJSONConfig
 from commons.Logger import ScriptLogger
@@ -181,11 +181,11 @@ def main(argv):
 
     # Dump Test Metadata
     os.system("date +%s%N | cut -b1-13 > " + FAAS_ROOT +
-              "/synthetic-workload-invoker/test_metadata.out")
+              "/synthetic_workload_invoker/test_metadata.out")
     os.system("echo " + options.config_json + " >> " + FAAS_ROOT +
-              "/synthetic-workload-invoker/test_metadata.out")
+              "/synthetic_workload_invoker/test_metadata.out")
     os.system("echo " + str(event_count) + " >> " + FAAS_ROOT +
-              "/synthetic-workload-invoker/test_metadata.out")
+              "/synthetic_workload_invoker/test_metadata.out")
 
     try:
         if workload['perf_monitoring']['runtime_script']:
