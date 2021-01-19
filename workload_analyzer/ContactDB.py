@@ -8,7 +8,7 @@ import os
 from wskutil import request
 import sys
 
-sys.path.insert(0, '../')
+sys.path = ['./', '../'] + sys.path
 
 # Local
 from GenConfigs import *

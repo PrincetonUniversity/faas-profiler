@@ -27,7 +27,9 @@ logger = ScriptLogger(loggername='comparative_analyzer', logfile='CA.log')
 archive_folder = FAAS_ROOT + "/data_archive/"
 
 
-def GetTimeFromDFName(dfname):
+def GetTimeFromDFName(dfname=None):
+    if (dfname is None):
+        raise ValueError("No dfname is provided, or dfname is None!")
     res = dfname[0:16]
     res = datetime.strptime(res, '%Y_%m_%d_%H_%M')
     return res

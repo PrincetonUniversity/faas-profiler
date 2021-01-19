@@ -1,0 +1,1 @@
+These tests perform basic verification of different modules, not requiring a running OpenWhisk deployment. 

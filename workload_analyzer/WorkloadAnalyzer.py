@@ -15,25 +15,24 @@ import pandas as pd
 import pickle
 import sys
 
-sys.path = ['./', '../'] + sys.path
-
 # Local
+sys.path = ['./', '../'] + sys.path
 from GenConfigs import *
-from ContactDB import GetActivationRecordsSince
+sys.path = [FAAS_ROOT, FAAS_ROOT+'/commons', FAAS_ROOT+'/workload_analyzer'] + sys.path
 from Logger import ScriptLogger
 from PerfMonAnalyzer import *
 from TestDataframePlotting import *
 
 logger = ScriptLogger(loggername='workload_analyzer',
-                      filename=FAAS_ROOT+'/logs/WA.log')
+                      logfile='WA.log')
 
 
-def GetTestMetadata():
+def GetTestMetadata(test_metadata_file=FAAS_ROOT+"/synthetic_workload_invoker/test_metadata.out"):
     """
     Returns the test start time from the output log of SWI.
     """
     test_start_time = None
-    with open(FAAS_ROOT+"/synthetic-workload-invoker/test_metadata.out") as f:
+    with open(test_metadata_file) as f:
         lines = f.readlines()
         test_start_time = lines[0]
         config_file = lines[1]
@@ -83,6 +82,7 @@ def ConstructTestDataframe(since, limit=1000, read_results=False):
     """
     Constructs a dataframe for the performance information of all invocations.
     """
+    from ContactDB import GetActivationRecordsSince
     perf_data = {'func_name': [], 'activationId': [], 'start': [], 'end': [
     ], 'duration': [], 'waitTime': [], 'initTime': [], 'latency': [], 'lang': []}
     if read_results:
@@ -331,7 +331,7 @@ def main(argv):
         pickle.dump([test_name, config_df, stat_df, test_df,
                      perf_mon_records], open(file_name, "wb"))
     if options.capacity_factor:
-        with open(FAAS_ROOT + '/workload-analyzer/capacity_factors.json', 'w') as outfile:
+        with open(FAAS_ROOT + '/workload_analyzer/capacity_factors.json', 'w') as outfile:
             json.dump(CapacityFactor(test_df), outfile)
 
     print('Performance Summary')
