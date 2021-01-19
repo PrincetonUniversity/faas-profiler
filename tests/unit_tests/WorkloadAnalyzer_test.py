@@ -6,8 +6,6 @@
 import sys
 import unittest
 sys.path.insert(0, '../..')
-# from workload_analyzer.wskutil import *
-# from workload_analyzer.ContactDB import *
 from workload_analyzer.WorkloadAnalyzer import GetTestMetadata
 
 class TestWorkloadAnalyzer(unittest.TestCase):
