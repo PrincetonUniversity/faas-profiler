@@ -43,7 +43,8 @@ def EnforceActivityWindow(start_time, end_time, instance_events):
     """
     events_iit = []
     events_abs = [0] + instance_events
-    event_times = [sum(events_abs[:i]) for i in range(1, len(events_abs))]
+    event_times = [sum(events_abs[:i]) for i in range(1, len(events_abs) + 1)]
+    # import pdb; pdb.set_trace()
     event_times = [e for e in event_times if (e > start_time)and(e < end_time)]
     try:
         events_iit = [event_times[0]] + [event_times[i]-event_times[i-1]
