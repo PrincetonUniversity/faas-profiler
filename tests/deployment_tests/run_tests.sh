@@ -3,6 +3,12 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+GenConfigFile=../../GenConfigs.py
+if [ ! -f "$GenConfigFile" ]; then
+    echo "$GenConfigFile does not exist!"
+    exit 1
+fi
+
 ACTION_CREATION_TEST_STATUS=$(./action_creation.sh | tail -1)
 if [[ $ACTION_CREATION_TEST_STATUS == 'FAIL' ]] 
 then 
