@@ -19,7 +19,7 @@ def CreateEvents(instance, dist, rate, duration, seed=None):
     """
     inter_arrivals = []
 
-    if rate == 0:
+    if (rate == 0) or (duration == 0):
         return inter_arrivals
 
     if dist == "Uniform":
@@ -30,9 +30,10 @@ def CreateEvents(instance, dist, rate, duration, seed=None):
     elif dist == "Poisson":
         np.random.seed(seed)
         beta = 1.0/rate
+        oversampling_factor = 2 # later the EnforceActivityWindow function will cut out of bound samples
         # Creating inter arrival times using an Exponential process
         inter_arrivals = list(np.random.exponential(
-            scale=beta, size=int(1.5*duration*rate)))
+            scale=beta, size=int(oversampling_factor*duration*rate)))
 
     return inter_arrivals
 
