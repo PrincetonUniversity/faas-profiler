@@ -112,7 +112,6 @@ def ConstructTestDataframe(since, limit=1000, read_results=False):
             perf_data['duration'][-1]+perf_data['waitTime'][-1])
         if read_results:
             perf_data['results'].append(activation['response']['result'])
-        # perf_data['statusCode'].append(activation['response']['statusCode'])
 
     return pd.DataFrame(perf_data)
 
