@@ -50,19 +50,6 @@ def CheckWorkloadValidity(workload, supported_distributions):
             pass
 
     logger_wlch.info('Required applications: ' + str(application_set))
-    # all_scripts_available = True
-
-    # for application in application_set:
-    #     if not os.path.isfile(FAAS_ROOT + '/invocation-scripts/'+application+'.sh'):
-    #         logger_wlch.error(
-    #             'No invocation script available in invocation-scripts for the following application: '+application)
-    #         all_scripts_available = False
-
-    # if not all_scripts_available:
-    #     logger_wlch.info('Incomplete invocation scripts => Terminating')
-    #     return False
-    # else:
-    #     logger_wlch.info('Script files for all applications exist')
     # 4 - Check for supported distributions
     if not distribution_set.issubset(supported_distributions):
         logger_wlch.error(

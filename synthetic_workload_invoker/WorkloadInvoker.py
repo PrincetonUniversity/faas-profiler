@@ -159,11 +159,6 @@ def main(argv):
     threads = []
 
     for (instance, instance_times) in all_events.items():
-        # Previous method to run processes
-        # instance_script = 'bash ' + FAAS_ROOT + '/invocation-scripts/' + \
-        #     workload['instances'][instance]['application']+'.sh'
-        # threads.append(threading.Thread(target=PROCESSInstanceGenerator, args=[instance, instance_script, instance_times, workload['blocking_cli']]))
-        # New method
         action = workload['instances'][instance]['application']
         try:
             param_file = workload['instances'][instance]['param_file']
