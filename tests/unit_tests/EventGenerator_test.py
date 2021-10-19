@@ -6,6 +6,7 @@
 import sys
 import unittest
 sys.path.insert(1, '../..')
+from commons.JSONConfigHelper import ReadJSONConfig
 from synthetic_workload_invoker.EventGenerator import *
 
 class TestEventGenerator(unittest.TestCase):
@@ -38,6 +39,12 @@ class TestEventGenerator(unittest.TestCase):
         event_iit = EnforceActivityWindow(start_time=1.5, end_time=3.5, 
                                           instance_events=[1.0, 1.0, 1.0, 1.0])
         self.assertEqual(event_iit, [2.0, 1.0])
+
+    def test_GenericEventGenerator_Normal(self):
+        workload = ReadJSONConfig('../test_data/sample_workload_configs.json')
+        [all_events, event_count] = GenericEventGenerator(workload)
+        self.assertEqual( sum([len(x) for x in all_events.values()]), event_count )
+        self.assertGreater( workload['test_duration_in_seconds'], max([sum(x) for x in all_events.values()]) )
 
 if __name__ == '__main__':
     unittest.main()

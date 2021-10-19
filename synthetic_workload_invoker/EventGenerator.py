@@ -87,12 +87,17 @@ def GenericEventGenerator(workload):
                                            rate=desc['rate'],
                                            duration=test_duration_in_seconds,
                                            seed=random_seed)
-            try:
+            if ('activity_window' in desc.keys()):
+                if (len(desc['activity_window'])!=2):
+                    msg = "activity_window should be a length of size 2."
+                    print(msg)
+                    logger_eg.info(msg)
+                    return [None, None]
                 start_time = desc['activity_window'][0]
                 end_time = desc['activity_window'][1]
                 instance_events = EnforceActivityWindow(
                     start_time, end_time, instance_events)
-            except:
+            else:
                 instance_events = EnforceActivityWindow(0,
                                                         workload['test_duration_in_seconds'],
                                                         instance_events)
