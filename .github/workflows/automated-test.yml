@@ -28,9 +28,6 @@ jobs:
     - name: Run config script
       run: |
         ./configure.sh
-    - name: Style check
-      run: |
-        pycodestyle . --count
     - name: Test with unittest
       run: |
         cd tests/unit_tests/
