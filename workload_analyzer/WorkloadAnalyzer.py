@@ -266,9 +266,9 @@ def main(argv):
     else:
         [test_name, config_df] = ConstructConfigDataframe(
             FAAS_ROOT + '/' + config_file)
-    
+
     read_results = True if options.read_results else False
-    test_df = ConstructTestDataframe(since=test_start_time, limit=100000, 
+    test_df = ConstructTestDataframe(since=test_start_time, limit=100000,
                                      read_results=read_results)
     if (test_df is None):
         logger.error('Test result dataframe could not be constructed!')

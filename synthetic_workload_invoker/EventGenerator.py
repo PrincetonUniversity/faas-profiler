@@ -30,7 +30,9 @@ def CreateEvents(instance, dist, rate, duration, seed=None):
     elif dist == "Poisson":
         np.random.seed(seed)
         beta = 1.0/rate
-        oversampling_factor = 2 # later the EnforceActivityWindow function will cut out of bound samples
+        oversampling_factor = 2
+        # later the EnforceActivityWindow function
+        # will cut out of bound samples.
         # Creating inter arrival times using an Exponential process
         inter_arrivals = list(np.random.exponential(
             scale=beta, size=int(oversampling_factor*duration*rate)))
@@ -88,7 +90,7 @@ def GenericEventGenerator(workload):
                                            duration=test_duration_in_seconds,
                                            seed=random_seed)
             if ('activity_window' in desc.keys()):
-                if (len(desc['activity_window'])!=2):
+                if (len(desc['activity_window']) != 2):
                     msg = "activity_window should be a length of size 2."
                     print(msg)
                     logger_eg.info(msg)

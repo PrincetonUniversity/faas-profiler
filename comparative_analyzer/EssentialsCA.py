@@ -3,15 +3,17 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-# Includes a bunch of common functions which can be used by different functions in the Comparative Analyzer module.
+# Includes a bunch of common functions which can be used by different
+# functions in the Comparative Analyzer module.
 
-import copy 
+import copy
 import pandas as pd
 
 
 def GetFuncInvocationDF(meta_df):
     """
-    Returns a DF containing test name, list of functions, and corresponding list of invocation rates.
+    Returns a DF containing test name, list of functions, and
+    corresponding list of invocation rates.
     Input: meta_df (a.k.a., combined_stat_df)
     """
     tmp_test_funclist_df = meta_df.groupby(meta_df['test'])['func_name'].apply(list).to_frame()
@@ -30,7 +32,7 @@ def MergeDictionaries(dic1, dic2):
                 l_dic1[key].append(dic2[key])
             else:
                 l_dic1[key] = [dic2[key]]
-        except: # empty dic1
+        except:     # empty dic1
             l_dic1 = {key: [dic2[key]]}
     return l_dic1
 
@@ -41,5 +43,5 @@ def MergeTwoListsAsDic(keys, values):
     dic = {}
     for i in range(len(keys)):
         dic[keys[i]] = values[i]
-    
+
     return dic

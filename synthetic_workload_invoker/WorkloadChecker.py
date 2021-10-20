@@ -16,8 +16,9 @@ from commons.Logger import ScriptLogger
 
 logger_wlch = ScriptLogger('workload_checker', 'SWI.log')
 
+supported_distributions = {'Poisson', 'Uniform'}
 
-def CheckWorkloadValidity(workload, supported_distributions):
+def CheckWorkloadValidity(workload):
     """
     Checks whether a loaded workload is valid.
     """

@@ -38,9 +38,9 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     ax.set_ylabel('Time (ms)')
     # sns.scatterplot(data=test_df, x=dims['s'], y=dims['wt'], hue='func_name', ax=ax, marker='v')
     # sns.scatterplot(data=test_df, x=dims['s'],
-    #                 y='CTX_voluntary', 
+    #                 y='CTX_voluntary',
     #                 hue='func_name', ax=ax, marker='^')
-    
+
     # if cgroups_df is None:
     #     fig, axs = plt.subplots(ncols=2)
     #     # axs = [axs]
@@ -55,13 +55,13 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     #                 alpha=.6, marker='o', ax=axs[0])
     # sns.relplot(data=test_df, x=dims['s'], y=dims['l'], \
     #                 hue='func_name', alpha=.6, marker='o', ax=axs[0])
-    
+
     # sns.relplot(data=test_df, x=dims['s'], y='execution', \
     #                 hue='func_name', alpha=.6, marker='o', ax=axs[1])
 
     # axs[0].set_xlim([0, 15000])
     # axs[0].scatter(test_df['start'], test_df['latency'])
-    
+
     # invocation_periods = []
     # start_times = []
     # for index, row in test_df.iterrows():
@@ -74,15 +74,15 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
         #     prev_start_time = start_time
         # except:
         #     prev_start_time = start_time
-        
+
         # print([start_time,end_time])
         # axs[1].plot([start_time,end_time], [start_time, start_time], c='k')
-    
+
     # sorted_starts = sorted(start_times)
     # invocation_periods = [sorted_starts[i+1] - sorted_starts[i] for i in range(len(sorted_starts) - 1)]
 
     # print('invocation period: ' + str(1.0*sum(invocation_periods)/len(invocation_periods)))
-    
+
     # try:
     #     sns.relplot(data=cgroups_df, x='timestamp', y='container_count', \
     #                 alpha=.6, marker='o', ax=axs[1])
@@ -90,7 +90,7 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     #     pass
 
     if save_plot:
-        plt.savefig(FAAS_ROOT + '/results.png') 
+        plt.savefig(FAAS_ROOT + '/results.png')
     else:
         plt.show()
 
@@ -120,7 +120,7 @@ def PerfMonPlotter(perf_mon_records, time_window = None):
     #     perf_df = perf_records[perf_records['In Test Bound']==True]
 
     palette = sns.color_palette("rocket_r", 16)
-    
+
     # 'timestamp','Core','IPC','LLC Misses','LLC Util (KB)','MBL (MB/s)'
     fig, axs = plt.subplots(ncols=2, nrows=2, sharex=True)
     pqos_records_sum = pqos_records.groupby('timestamp').sum()
@@ -128,21 +128,31 @@ def PerfMonPlotter(perf_mon_records, time_window = None):
     pqos_records_sum.plot(y='MBL (MB/s)', ax=axs[0][1])
     pqos_records_sum.plot(y='LLC Util (KB)', ax=axs[1][0])
     pqos_records_sum.plot(y='LLC Misses', ax=axs[1][1])
-    axs[0][0].set_ylim([0,20])
+    axs[0][0].set_ylim([0, 20])
 
-    # sns.relplot(data=pqos_records, x='timestamp', y='IPC', hue='Core', kind='line', palette=palette, alpha=0.75)
-    # sns.relplot(data=pqos_records, x='timestamp', y='MBL (MB/s)', hue='Core', kind='scatter', palette=palette, alpha=0.75)
-    # sns.lmplot(data=pqos_df.groupby('timestamp').sum(), x='IPC', y='MBL (MB/s)', palette=palette,
-    #            truncate=True, order=5, fit_reg=False, scatter_kws={'alpha':0.5}, legend_out=False)
-    # sns.jointplot(data=pqos_df.groupby('timestamp').sum(), x='LLC Util (KB)', y='MBL (MB/s)', kind="hex", zorder=0)
-                #  .plot_joint(sns.kdeplot, zorder=10, n_levels=25, bw='silverman')
+    # sns.relplot(data=pqos_records, x='timestamp', y='IPC',
+    #             hue='Core', kind='line', palette=palette, alpha=0.75)
+    # sns.relplot(data=pqos_records, x='timestamp', y='MBL (MB/s)',
+    #             hue='Core', kind='scatter', palette=palette, alpha=0.75)
+    # sns.lmplot(data=pqos_df.groupby('timestamp').sum(),
+    #            x='IPC', y='MBL (MB/s)', palette=palette,
+    #            truncate=True, order=5, fit_reg=False,
+    #            scatter_kws={'alpha':0.5}, legend_out=False)
+    # sns.jointplot(data=pqos_df.groupby('timestamp').sum(),
+    #               x='LLC Util (KB)', y='MBL (MB/s)', kind="hex", zorder=0)
 
-    # cpu-cycles,L1-dcache-loads,L1-dcache-load-misses,L1-icache-load-misses,dTLB-load-misses,dTLB-loads,
-    # iTLB-load-misses,iTLB-loads,branch-misses,context-switches,cpu-migrations,page-faults
-    # sns.relplot(data=perf_records, x='timestamp', y='context-switches', kind='line', palette=palette, alpha=0.75)
-    # plt.stackplot(perf_records['timestamp'], perf_records['r4f1'], perf_records['r2f1'], perf_records['r1f1'])
-    # sns.relplot(data=perf_df, x='context-switches', y='r1f1', kind='scatter', palette=palette, alpha=0.75)
-    # perf_records['Branch Miss Rate (%)'] = 100.0*perf_records['branch-misses']/perf_records['branches']
+    # cpu-cycles,L1-dcache-loads,L1-dcache-load-misses,
+    # L1-icache-load-misses,dTLB-load-misses,dTLB-loads,
+    # iTLB-load-misses,iTLB-loads,branch-misses,context-switches,
+    # cpu-migrations,page-faults
+    # sns.relplot(data=perf_records, x='timestamp', y='context-switches',
+    #             kind='line', palette=palette, alpha=0.75)
+    # plt.stackplot(perf_records['timestamp'], perf_records['r4f1'],
+    #               perf_records['r2f1'], perf_records['r1f1'])
+    # sns.relplot(data=perf_df, x='context-switches', y='r1f1',
+    #             kind='scatter', palette=palette, alpha=0.75)
+    # perf_records['Branch Miss Rate (%)'] = \
+    #           100.0*perf_records['branch-misses']/perf_records['branches']
     # sns.lmplot(data=perf_records, x='context-switches', y='block:block_plug',
     #            truncate=True, order=8, scatter_kws={'alpha':0.5}, legend_out=False)
     # sns.jointplot(data=perf_df, x='dTLB-loads', y='iTLB-loads', kind="hex", zorder=0)
