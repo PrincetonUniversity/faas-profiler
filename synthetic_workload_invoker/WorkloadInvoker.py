@@ -27,10 +27,6 @@ from commons.Logger import ScriptLogger
 from WorkloadChecker import CheckWorkloadValidity
 
 logging.captureWarnings(True)
-
-# Global variables
-supported_distributions = {'Poisson', 'Uniform'}
-
 logger = ScriptLogger('workload_invoker', 'SWI.log')
 
 
@@ -151,7 +147,7 @@ def main(argv):
         return False    # Abort the function if json file not valid
 
     workload = ReadJSONConfig(options.config_json)
-    if not CheckWorkloadValidity(workload=workload, supported_distributions=supported_distributions):
+    if not CheckWorkloadValidity(workload=workload):
         return False    # Abort the function if json file not valid
 
     [all_events, event_count] = GenericEventGenerator(workload)

@@ -8,7 +8,7 @@ import unittest
 sys.path.insert(1, '../..')
 from commons.JSONConfigHelper import ReadJSONConfig
 from synthetic_workload_invoker.WorkloadChecker import *
-from synthetic_workload_invoker.WorkloadInvoker import *
+
 
 class TestWorkloadChecker(unittest.TestCase):
     def test_supported_distributions(self):
@@ -16,8 +16,9 @@ class TestWorkloadChecker(unittest.TestCase):
 
     def test_CheckWorkloadValidity(self):
         workload = ReadJSONConfig('../test_data/sample_workload_configs.json')
-        valid = CheckWorkloadValidity(workload, supported_distributions)
+        valid = CheckWorkloadValidity(workload)
         self.assertTrue(valid)
+
 
 if __name__ == '__main__':
     unittest.main()
