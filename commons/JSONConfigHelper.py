@@ -25,7 +25,7 @@ def CheckJSONConfig(json_file):
 
 def ReadJSONConfig(json_file):
     """
-    Reads the JSON config file and returns a list. 
+    Reads the JSON config file and returns a list.
     """
     workload = None
     try:

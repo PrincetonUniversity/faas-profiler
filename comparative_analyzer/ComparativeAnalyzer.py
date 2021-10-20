@@ -171,7 +171,8 @@ def RelativeDegradation(combined_stat_df):
     #         alpha=0.5, marker='o', ax=axs[0])
     # combined_stat_df.plot(kind='line', x='rate', y='throughput',
     #         alpha=0.5, marker='o', ax=axs[1])
-    # sns.relplot(data=combined_stat_df, x='rate', y='throughput', ax=axs[1], kind='line')
+    # sns.relplot(data=combined_stat_df, x='rate',
+    #             y='throughput', ax=axs[1], kind='line')
     function_of_interest = 'rand_vector_loop_d'
     test_cats = set(combined_stat_df['Test Category'])
     for test_cat in test_cats:
