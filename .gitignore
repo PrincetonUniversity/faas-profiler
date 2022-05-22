@@ -5,5 +5,6 @@ GenConfigs.py
 *.log
 *.pkl
 
-# compiled bytecode
+# compiled bytecode and other caches
 __pycache__/
+*.coverage

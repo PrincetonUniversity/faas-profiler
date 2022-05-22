@@ -1,12 +1,10 @@
-# Copyright (c) 2021 Princeton University
+# Copyright (c) 2021 Princeton University, 2022 UBC
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
 import datetime
-import sys
 import unittest
-sys.path.insert(0, '../..')
 from comparative_analyzer.ComparativeAnalyzer import *
 
 
