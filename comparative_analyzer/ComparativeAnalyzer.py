@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Copyright (c) 2019 Princeton University
+# Copyright (c) 2019 Princeton University, 2022 UBC
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
@@ -46,15 +46,19 @@ def ComparativePlotting(t_df, p_df_dic):
     t_df['start'] = t_df['start']/1000.0
     t_df['latency'] = t_df['latency']/1000.0
 
-    p_df = p_df_dic['perf_records']
+    if p_df_dic is not None:
+        p_df = p_df_dic['perf_records']
 
-    # Add new dimensions if perf data is available
+    ### ADD NEW DIMENSIONS TO THE DATA IF NEEDED
+    # examples:
     # p_df['IPC'] = p_df['instructions']/p_df['cycles']
     # p_df['Page Faults per Million Instruction'] = 1000000.0*p_df['page-faults']/p_df['instructions']
 
-    # Add your plotting code here
+    ### ADD YOUR PLOTTING CODE HERE
+    # below code is just an example:
+    sns.scatterplot(data=t_df, x='start', y='latency', hue='test')
 
-    plt.show()
+    plt.savefig('sample_comparative_plot.png')
     plt.close()
 
 
@@ -187,7 +191,7 @@ def RelativeDegradation(combined_stat_df):
     plt.close()
 
 
-def main(argv):
+def main(argv=None):
     """
     The main function.
     """
@@ -221,7 +225,7 @@ def main(argv):
     [combined_test_df, combined_perf_df_dic, combined_stat_df] = CompareArchives(
         archive_files, options.plot)
 
-    if options.plot:
+    if (options.plot) or (argv is None):
         ComparativePlotting(t_df=combined_test_df,
                             p_df_dic=combined_perf_df_dic)
     elif options.customized_plot is not None:

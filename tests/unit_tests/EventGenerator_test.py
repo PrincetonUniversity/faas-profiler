@@ -1,11 +1,9 @@
-# Copyright (c) 2021 Princeton University
+# Copyright (c) 2021 Princeton University, 2022 UBC
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import sys
 import unittest
-sys.path.insert(1, '../..')
 from commons.JSONConfigHelper import ReadJSONConfig
 from synthetic_workload_invoker.EventGenerator import *
 
@@ -47,7 +45,7 @@ class TestEventGenerator(unittest.TestCase):
         self.assertEqual(event_iit, [2.0, 1.0])
 
     def test_GenericEventGenerator_Normal(self):
-        workload = ReadJSONConfig('../test_data/sample_workload_configs.json')
+        workload = ReadJSONConfig('tests/test_data/sample_workload_configs.json')
         [all_events, event_count] = GenericEventGenerator(workload)
         self.assertEqual(sum([len(x) for x in all_events.values()]),
                          event_count)

@@ -91,7 +91,7 @@ def GenericEventGenerator(workload):
                                            seed=random_seed)
             if ('activity_window' in desc.keys()):
                 if (len(desc['activity_window']) != 2):
-                    msg = "activity_window should be a length of size 2."
+                    msg = "activity_window should be a list with length of 2."
                     print(msg)
                     logger_eg.info(msg)
                     return [None, None]

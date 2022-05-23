@@ -33,10 +33,3 @@ Test logs can be found in `../logs/SWI.log`.
 ## Required Packages (beyond standard libraries)
 
 * NumPy
-
-## Tested Environments
-
-Environment/Tool | Tested Version 
----------------- | --------------
-Python | 3.6.5 & 3.6.8
-OS | Ubuntu 16.04.4 LTS
