@@ -13,10 +13,3 @@ python ComparativeAnalyzer.py
     2. `-p` or `--plot`: plotting default comperative results.
     3. `-c` or `--customized_plot=FILE`: use a customized plotting script. This customized script should include the function `ComparativePlotting`. Look at the script `CustomPlotting.py` as an example.
 4. Logs can be found in `../logs/CA.log`.
-
-## Tested Environment 
-
-Environment/Tool | Tested Version 
----------------- | --------------
-Python | 3.6.5
-OS | Ubuntu 16.04.4 LTS

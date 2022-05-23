@@ -27,12 +27,5 @@ python WorkloadAnalyzer.py -r -p
 * pandas
 * seaborn
 
-## Tested Environments 
-
-Environment/Tool | Tested Version 
----------------- | --------------
-Python | 3.6.5 & 3.6.8
-OS | Ubuntu 16.04.4 LTS
-
 #### Important Note:
 The `wskutil.py` script has been taken from the OpenWhisk project (https://github.com/apache/openwhisk/blob/master/tools/admin/wskutil.py) with no modifications. It holds the original Apache 2.0 license.
