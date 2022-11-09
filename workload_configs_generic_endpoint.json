@@ -1,0 +1,42 @@
+{
+    "test_name": "example_test",
+    "test_duration_in_seconds": 15,
+    "random_seed": 100,
+    "blocking_cli": false,
+    "endpoint": "generic",
+    "instances":{
+        "instance1":{
+            "application": "example_app1",
+            "url": "{Publicly accessible trigger URL}",
+            "data": {"message": "sample.png"},
+            "distribution": "Uniform",
+            "rate": 1,
+            "activity_window": [5, 10]
+        },
+        "instance2":{
+            "application": "example_app2_json_data",
+            "url": "{Publicly accessible trigger URL}",
+            "data": {
+                "argument": "{\"fileName\":\"test.mp4\"}"
+            },
+            "distribution": "Uniform",
+            "rate": 5,
+            "activity_window": [5, 10]
+        },
+        "instance3":{
+            "application": "example_app3_json_data_complex",
+            "url": "{Publicly accessible AWS Step Function trigger URL}",
+            "data": {
+                "input": "{\"input_image\": \"logo.jpg\"}",
+                "stateMachineArn": "{Amazon Resource Name (ARN) of the state machine to execute}"
+            },
+            "distribution": "Poisson",
+            "rate": 10,
+            "activity_window": [5, 10]
+        }
+    },
+    "perf_monitoring":{
+        "runtime_script": "monitoring/RuntimeMonitoring.sh",
+        "post_script": null
+    }
+}
