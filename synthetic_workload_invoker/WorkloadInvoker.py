@@ -143,7 +143,6 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
 
     session = FuturesSession(max_workers=100)
     parameters = {"blocking": blocking_cli, "result": RESULT}
-    # authentication = (user_pass[0], user_pass[1])
     after_time, before_time = 0, 0
 
     st = 0
@@ -158,7 +157,6 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
             data=json.dumps(data),
             verify=False,
         )
-        # print(future.result().text) # this would make it blocking if used
         after_time = time.time()
 
     return True
