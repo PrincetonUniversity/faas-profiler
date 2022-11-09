@@ -30,7 +30,7 @@ bash configure.sh
 
 ### Specify the Test 
 
-The first step is to prepare a workload configuration file that tells FaaSProfiler about your scenario. A sample workload configuration file, called [workload_configs.json](./workload_configs.json), has been provided. You can base your own on this JSON file and configure it. Here are some details:
+The first step is to prepare a workload configuration file that tells FaaSProfiler about your scenario. A sample workload configuration file, called [workload_configs_local_openwhisk.json](./workload_configs_local_openwhisk.json), has been provided. You can base your own on this JSON file and configure it. Here are some details:
 
 1. Primary fields:
     1. `test_duration_in_seconds`: Determines the length of the test in seconds.
