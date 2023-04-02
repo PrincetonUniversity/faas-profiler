@@ -9,7 +9,6 @@
 import json
 from optparse import OptionParser
 import os
-import requests
 from requests_futures.sessions import FuturesSession
 import subprocess
 import sys
