@@ -7,17 +7,23 @@ import matplotlib.pyplot as plt
 
 
 def ComparativePlotting(t_df, p_df_dic):
-        """
-        Plotting result comparisons.
-        """
-        # possible t_df dimensions:
-        # # 'start', 'duration', 'waitTime', 'initTime', 'latency'
+    """
+    Plotting result comparisons.
+    """
+    # possible t_df dimensions:
+    # # 'start', 'duration', 'waitTime', 'initTime', 'latency'
 
-        t_df.plot(kind='scatter', x='start', y='latency',
-                  alpha=0.5, label='Total Latency', marker='o')
+    t_df.plot(
+        kind="scatter",
+        x="start",
+        y="latency",
+        alpha=0.5,
+        label="Total Latency",
+        marker="o",
+    )
 
-        # p_pqos_df = p_df_dic['pqos_records']
-        # p_perf_df = p_df_dic['perf_records']
- 
-        plt.show()
-        plt.close()
+    # p_pqos_df = p_df_dic['pqos_records']
+    # p_perf_df = p_df_dic['perf_records']
+
+    plt.show()
+    plt.close()

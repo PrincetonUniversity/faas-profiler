@@ -8,7 +8,7 @@ import os
 import sys
 
 # Local imports
-sys.path = ['./', '../'] + sys.path
+sys.path = ["./", "../"] + sys.path
 from GenConfigs import *
 
 
@@ -41,5 +41,5 @@ def WriteJSONConfig(workload, json_file):
     """
     Writes the workload description to a json file.
     """
-    with open(FAAS_ROOT + '/' + json_file, 'w') as outfile:
+    with open(FAAS_ROOT + "/" + json_file, "w") as outfile:
         json.dump(workload, outfile)

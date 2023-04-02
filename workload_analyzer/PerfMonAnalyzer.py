@@ -9,14 +9,15 @@ import os.path
 import pandas as pd
 import sys
 
-sys.path = ['./', '../'] + sys.path
+sys.path = ["./", "../"] + sys.path
 
 # Local
 from GenConfigs import *
 from Logger import ScriptLogger
 
-logger = ScriptLogger(loggername='workload_analyzer/perf_mon_analyzer',
-                      logfile='WA.log')
+logger = ScriptLogger(
+    loggername="workload_analyzer/perf_mon_analyzer", logfile="WA.log"
+)
 
 
 def ReadPQOSMSRMon(pqos_msr_mon_file):
@@ -26,47 +27,65 @@ def ReadPQOSMSRMon(pqos_msr_mon_file):
     with open(pqos_msr_mon_file) as f:
         lines = f.readlines()
 
-    records = {'timestamp': [], 'Core': [], 'IPC': [],
-               'LLC Misses': [], 'LLC Util (KB)': [], 'MBL (MB/s)': []}
-    tmp_records = {'timestamp': [], 'Core': [], 'IPC': [],
-                   'LLC Misses': [], 'LLC Util (KB)': [], 'MBL (MB/s)': []}
+    records = {
+        "timestamp": [],
+        "Core": [],
+        "IPC": [],
+        "LLC Misses": [],
+        "LLC Util (KB)": [],
+        "MBL (MB/s)": [],
+    }
+    tmp_records = {
+        "timestamp": [],
+        "Core": [],
+        "IPC": [],
+        "LLC Misses": [],
+        "LLC Util (KB)": [],
+        "MBL (MB/s)": [],
+    }
     prev_timestamp, index = None, -1
 
     for line_index in range(len(lines)):
         line = lines[line_index]
-        if 'TIME' in line:
+        if "TIME" in line:
             index += 1
-            timestamp = datetime.strptime(line[5:-1], '%Y-%m-%d %H:%M:%S')
-            if (timestamp != prev_timestamp):
+            timestamp = datetime.strptime(line[5:-1], "%Y-%m-%d %H:%M:%S")
+            if timestamp != prev_timestamp:
                 for key, value in tmp_records.items():
-                    if key == 'timestamp':
+                    if key == "timestamp":
                         for i in value:
-                            records[key] += [prev_timestamp +
-                                             timedelta(seconds=1.0*i/index)]
+                            records[key] += [
+                                prev_timestamp + timedelta(seconds=1.0 * i / index)
+                            ]
                     else:
                         records[key] += value
-                tmp_records = {'timestamp': [], 'Core': [], 'IPC': [
-                ], 'LLC Misses': [], 'LLC Util (KB)': [], 'MBL (MB/s)': []}
+                tmp_records = {
+                    "timestamp": [],
+                    "Core": [],
+                    "IPC": [],
+                    "LLC Misses": [],
+                    "LLC Util (KB)": [],
+                    "MBL (MB/s)": [],
+                }
                 index = 0
 
             prev_timestamp = timestamp
-        elif 'CORE' in line:
+        elif "CORE" in line:
             pass
         else:
-            tmp_records['timestamp'].append(index)
-            separated = line.split(' ')
-            separated = [v for v in separated if v != '']
-            tmp_records['Core'].append(int(separated[0]))
-            tmp_records['IPC'].append(float(separated[1]))
-            tmp_records['LLC Misses'].append(int(separated[2][:-1])*1000)
-            tmp_records['LLC Util (KB)'].append(float(separated[3]))
-            tmp_records['MBL (MB/s)'].append(float(separated[4]))
+            tmp_records["timestamp"].append(index)
+            separated = line.split(" ")
+            separated = [v for v in separated if v != ""]
+            tmp_records["Core"].append(int(separated[0]))
+            tmp_records["IPC"].append(float(separated[1]))
+            tmp_records["LLC Misses"].append(int(separated[2][:-1]) * 1000)
+            tmp_records["LLC Util (KB)"].append(float(separated[3]))
+            tmp_records["MBL (MB/s)"].append(float(separated[4]))
 
     for key, value in tmp_records.items():
-        if key == 'timestamp':
+        if key == "timestamp":
             for i in value:
-                records[key] += [prev_timestamp +
-                                 timedelta(seconds=1.0*i/index)]
+                records[key] += [prev_timestamp + timedelta(seconds=1.0 * i / index)]
         else:
             records[key] += value
 
@@ -82,14 +101,14 @@ def ReadPerfMon(perf_mon_file):
     with open(perf_mon_file) as f:
         lines = f.readlines()
 
-    records = {'timestamp': []}          # more fields are added dynamically
+    records = {"timestamp": []}  # more fields are added dynamically
 
     for line in lines:
-        separated = line.split(' ')
-        separated = [v for v in separated if v != '']
+        separated = line.split(" ")
+        separated = [v for v in separated if v != ""]
 
         try:
-            if 'counted' in separated[2]:
+            if "counted" in separated[2]:
                 del separated[2]
         except:
             pass
@@ -99,18 +118,18 @@ def ReadPerfMon(perf_mon_file):
         time = float(separated[0])
         field = separated[2]
         try:
-            val = int(separated[1].replace(',', ''))
+            val = int(separated[1].replace(",", ""))
         except:
             val = None
         try:
             records[field].append(val)
         except:
-            records[field] = [val]      # first element of the list
+            records[field] = [val]  # first element of the list
         try:
-            if records['timestamp'][-1] != time:
-                records['timestamp'].append(time)
+            if records["timestamp"][-1] != time:
+                records["timestamp"].append(time)
         except:
-            records['timestamp'].append(time)   # first append
+            records["timestamp"].append(time)  # first append
 
     # return the records as Pandas dataframe
     return pd.DataFrame(records)
@@ -123,7 +142,7 @@ def AnalyzePerfMonRecords(config_file):
     logger.info("Started to analyze the performance monitoring records.")
 
     try:
-        with open(FAAS_ROOT + '/' + config_file) as f:
+        with open(FAAS_ROOT + "/" + config_file) as f:
             workload = json.load(f)
     except:
         return False
@@ -131,18 +150,18 @@ def AnalyzePerfMonRecords(config_file):
     records = {}
 
     # Perf Tool
-    perf_mon_file = FAAS_ROOT + '/perf-mon.out'
-    pqos_msr_mon_file = FAAS_ROOT + '/pqos-msr-mon.out'
+    perf_mon_file = FAAS_ROOT + "/perf-mon.out"
+    pqos_msr_mon_file = FAAS_ROOT + "/pqos-msr-mon.out"
 
     if not os.path.isfile(perf_mon_file):
         logger.error("The perf output file missing!")
     else:
-        records['perf_records'] = ReadPerfMon(perf_mon_file)
+        records["perf_records"] = ReadPerfMon(perf_mon_file)
 
     # PQOS Mon
     if not os.path.isfile(pqos_msr_mon_file):
         logger.error("The PQOS output file is missing!")
     else:
-        records['pqos_records'] = ReadPQOSMSRMon(pqos_msr_mon_file)
+        records["pqos_records"] = ReadPQOSMSRMon(pqos_msr_mon_file)
 
     return records

@@ -16,9 +16,13 @@ def GetFuncInvocationDF(meta_df):
     corresponding list of invocation rates.
     Input: meta_df (a.k.a., combined_stat_df)
     """
-    tmp_test_funclist_df = meta_df.groupby(meta_df['test'])['func_name'].apply(list).to_frame()
-    tmp_test_ratelist_df = meta_df.groupby(meta_df['test'])['rate'].apply(list).to_frame()
-    return pd.merge(tmp_test_funclist_df, tmp_test_ratelist_df, on='test')
+    tmp_test_funclist_df = (
+        meta_df.groupby(meta_df["test"])["func_name"].apply(list).to_frame()
+    )
+    tmp_test_ratelist_df = (
+        meta_df.groupby(meta_df["test"])["rate"].apply(list).to_frame()
+    )
+    return pd.merge(tmp_test_funclist_df, tmp_test_ratelist_df, on="test")
 
 
 def MergeDictionaries(dic1, dic2):
@@ -32,14 +36,13 @@ def MergeDictionaries(dic1, dic2):
                 l_dic1[key].append(dic2[key])
             else:
                 l_dic1[key] = [dic2[key]]
-        except:     # empty dic1
+        except:  # empty dic1
             l_dic1 = {key: [dic2[key]]}
     return l_dic1
 
 
 def MergeTwoListsAsDic(keys, values):
-    """
-    """
+    """ """
     dic = {}
     for i in range(len(keys)):
         dic[keys[i]] = values[i]

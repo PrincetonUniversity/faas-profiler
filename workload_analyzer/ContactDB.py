@@ -8,13 +8,12 @@ import os
 from wskutil import request
 import sys
 
-sys.path = ['./', '../'] + sys.path
+sys.path = ["./", "../"] + sys.path
 
 # Local
 from GenConfigs import *
 
-DB_CONFIG_FILE = os.path.expanduser(
-    WSK_PATH[:-3]+'/../ansible/db_local.ini')
+DB_CONFIG_FILE = os.path.expanduser(WSK_PATH[:-3] + "/../ansible/db_local.ini")
 
 # Examples:
 # print(GetDBConfigs())
@@ -28,21 +27,21 @@ def GetDBConfigs():
     Retrieves DB configs from a configuration file.
     """
     configs = {}
-    with open(DB_CONFIG_FILE, 'r') as config_file:
+    with open(DB_CONFIG_FILE, "r") as config_file:
         lines = config_file.readlines()
         for line in lines:
-            if line[0] == '[':
+            if line[0] == "[":
                 domain = line[1:-2]
                 configs[domain] = {}
                 last_dom = domain
             else:
                 try:
-                    key = line[:line.index('=')]
+                    key = line[: line.index("=")]
                 except:
                     continue
-                configs[last_dom][key] = line[line.index('=')+1:-1]
+                configs[last_dom][key] = line[line.index("=") + 1 : -1]
 
-    return configs['db_creds']
+    return configs["db_creds"]
 
 
 def GetAllActivationDocs():
@@ -50,13 +49,24 @@ def GetAllActivationDocs():
     Returns all activation record keys.
     """
     configs = GetDBConfigs()
-    url = configs['db_protocol']+'://'+configs['db_host']+':' + \
-        configs['db_port']+'/'+'whisk_local_activations/_all_docs'
+    url = (
+        configs["db_protocol"]
+        + "://"
+        + configs["db_host"]
+        + ":"
+        + configs["db_port"]
+        + "/"
+        + "whisk_local_activations/_all_docs"
+    )
     headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     }
-    res = request('GET', url, headers=headers, auth='%s:%s' %
-                  (configs['db_username'], configs['db_password']))
+    res = request(
+        "GET",
+        url,
+        headers=headers,
+        auth="%s:%s" % (configs["db_username"], configs["db_password"]),
+    )
 
     return json.loads(res.read())
 
@@ -66,22 +76,27 @@ def GetActivationRecordsSince(since, limit=100):
     Returns details on activation records since a given tick in milliseconds
     """
     configs = GetDBConfigs()
-    url = configs['db_protocol']+'://'+configs['db_host']+':' + \
-        configs['db_port']+'/'+'whisk_local_activations/_find'
+    url = (
+        configs["db_protocol"]
+        + "://"
+        + configs["db_host"]
+        + ":"
+        + configs["db_port"]
+        + "/"
+        + "whisk_local_activations/_find"
+    )
     headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     }
-    body = {
-        "selector": {
-            "start": {
-                "$gte": since
-            }
-        },
-        "limit": limit
-    }
+    body = {"selector": {"start": {"$gte": since}}, "limit": limit}
 
-    res = request('POST', url, body=json.dumps(body), headers=headers,
-                  auth='%s:%s' % (configs['db_username'], configs['db_password']))
+    res = request(
+        "POST",
+        url,
+        body=json.dumps(body),
+        headers=headers,
+        auth="%s:%s" % (configs["db_username"], configs["db_password"]),
+    )
 
     return json.loads(res.read())
 
@@ -91,38 +106,58 @@ def GetActivationIDsSince(since, limit=100):
     Returns the activation IDs (including the namespace)
     """
     configs = GetDBConfigs()
-    url = configs['db_protocol']+'://'+configs['db_host']+':' + \
-        configs['db_port']+'/'+'whisk_local_activations/_find'
+    url = (
+        configs["db_protocol"]
+        + "://"
+        + configs["db_host"]
+        + ":"
+        + configs["db_port"]
+        + "/"
+        + "whisk_local_activations/_find"
+    )
     headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     }
-    body = {
-        "selector": {
-            "start": {
-                "$gte": since
-            }
-        },
-        "limit": limit
-    }
-    res = request('POST', url, body=json.dumps(body), headers=headers,
-                  auth='%s:%s' % (configs['db_username'], configs['db_password']))
+    body = {"selector": {"start": {"$gte": since}}, "limit": limit}
+    res = request(
+        "POST",
+        url,
+        body=json.dumps(body),
+        headers=headers,
+        auth="%s:%s" % (configs["db_username"], configs["db_password"]),
+    )
     doc = json.loads(res.read())
-    IDs = [x['_id'] for x in doc["docs"]]
+    IDs = [x["_id"] for x in doc["docs"]]
 
     return IDs
 
 
-def GetActivation(activation_id, namespace='guest'):
+def GetActivation(activation_id, namespace="guest"):
     """
     Returns details for an activation id.
     """
     configs = GetDBConfigs()
-    url = configs['db_protocol']+'://'+configs['db_host']+':'+configs['db_port'] + \
-        '/'+'whisk_local_activations'+'/'+namespace+'%2F'+activation_id
+    url = (
+        configs["db_protocol"]
+        + "://"
+        + configs["db_host"]
+        + ":"
+        + configs["db_port"]
+        + "/"
+        + "whisk_local_activations"
+        + "/"
+        + namespace
+        + "%2F"
+        + activation_id
+    )
     headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     }
-    res = request('GET', url, headers=headers, auth='%s:%s' %
-                  (configs['db_username'], configs['db_password']))
+    res = request(
+        "GET",
+        url,
+        headers=headers,
+        auth="%s:%s" % (configs["db_username"], configs["db_password"]),
+    )
 
     return json.loads(res.read())

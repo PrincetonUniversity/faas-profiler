@@ -9,7 +9,7 @@ import pandas as pd
 import seaborn as sns
 import sys
 
-sys.path = ['./', '../'] + sys.path
+sys.path = ["./", "../"] + sys.path
 
 # Local
 from GenConfigs import *
@@ -20,22 +20,59 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     This function is for plotting the test dataframe data.
     """
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    dims = {'s': 'start', 'd': 'duration',
-            'wt': 'waitTime', 'it': 'initTime', 'l': 'latency'}
+    dims = {
+        "s": "start",
+        "d": "duration",
+        "wt": "waitTime",
+        "it": "initTime",
+        "l": "latency",
+    }
 
     print(test_df)
 
-    color_palette = sns.color_palette('Set1')
-    test_df.plot(kind='scatter', x=dims['s'], y=dims['d'],
-                 c=color_palette[0], alpha=0.5, ax=ax, label='Run Time', marker='*')
-    test_df.plot(kind='scatter', x=dims['s'], y=dims['it'],
-                 c=color_palette[1], alpha=0.5, ax=ax, label='Initiation Time', marker='^')
-    test_df.plot(kind='scatter', x=dims['s'], y=dims['wt'],
-                 c=color_palette[2], alpha=0.5, ax=ax, label='Wait Time', marker='v')
-    test_df.plot(kind='scatter', x=dims['s'], y=dims['l'],
-                 c=color_palette[3], alpha=0.5, ax=ax, label='Total Latency', marker='o')
-    ax.set_xlabel('Invocation Time (s)')
-    ax.set_ylabel('Time (ms)')
+    color_palette = sns.color_palette("Set1")
+    test_df.plot(
+        kind="scatter",
+        x=dims["s"],
+        y=dims["d"],
+        c=color_palette[0],
+        alpha=0.5,
+        ax=ax,
+        label="Run Time",
+        marker="*",
+    )
+    test_df.plot(
+        kind="scatter",
+        x=dims["s"],
+        y=dims["it"],
+        c=color_palette[1],
+        alpha=0.5,
+        ax=ax,
+        label="Initiation Time",
+        marker="^",
+    )
+    test_df.plot(
+        kind="scatter",
+        x=dims["s"],
+        y=dims["wt"],
+        c=color_palette[2],
+        alpha=0.5,
+        ax=ax,
+        label="Wait Time",
+        marker="v",
+    )
+    test_df.plot(
+        kind="scatter",
+        x=dims["s"],
+        y=dims["l"],
+        c=color_palette[3],
+        alpha=0.5,
+        ax=ax,
+        label="Total Latency",
+        marker="o",
+    )
+    ax.set_xlabel("Invocation Time (s)")
+    ax.set_ylabel("Time (ms)")
     # sns.scatterplot(data=test_df, x=dims['s'], y=dims['wt'], hue='func_name', ax=ax, marker='v')
     # sns.scatterplot(data=test_df, x=dims['s'],
     #                 y='CTX_voluntary',
@@ -48,7 +85,7 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     #     fig, axs = plt.subplots(nrows=2)
 
     # sns.set(style="whitegrid")
-    color_palette = sns.color_palette('Paired')
+    color_palette = sns.color_palette("Paired")
 
     # sns.relplot(data=test_df, x=dims['s'], y=dims['d'], \
     #                 hue='func_name', size=dims['wt'], \
@@ -66,17 +103,17 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     # start_times = []
     # for index, row in test_df.iterrows():
     #     start_time = row['start']
-        # start_times.append(start_time)
-        # end_time = row['end']
-        # try:
-        #     start_diff = start_time - prev_start_time
-        #     invocation_periods.append(start_diff)
-        #     prev_start_time = start_time
-        # except:
-        #     prev_start_time = start_time
+    # start_times.append(start_time)
+    # end_time = row['end']
+    # try:
+    #     start_diff = start_time - prev_start_time
+    #     invocation_periods.append(start_diff)
+    #     prev_start_time = start_time
+    # except:
+    #     prev_start_time = start_time
 
-        # print([start_time,end_time])
-        # axs[1].plot([start_time,end_time], [start_time, start_time], c='k')
+    # print([start_time,end_time])
+    # axs[1].plot([start_time,end_time], [start_time, start_time], c='k')
 
     # sorted_starts = sorted(start_times)
     # invocation_periods = [sorted_starts[i+1] - sorted_starts[i] for i in range(len(sorted_starts) - 1)]
@@ -90,7 +127,7 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     #     pass
 
     if save_plot:
-        plt.savefig(FAAS_ROOT + '/results.png')
+        plt.savefig(FAAS_ROOT + "/results.png")
     else:
         plt.show()
 
@@ -99,12 +136,12 @@ def TestDataframePlotter(save_plot, test_df, cgroups_df=None, perf_mon_records=N
     return True
 
 
-def PerfMonPlotter(perf_mon_records, time_window = None):
+def PerfMonPlotter(perf_mon_records, time_window=None):
     """
     For plotting performance monitoring records.
     """
     # Entire records
-    pqos_records = perf_mon_records['pqos_records']
+    pqos_records = perf_mon_records["pqos_records"]
     # perf_records = perf_mon_records['perf_records']
     # # Select a time window if provided
     # if time_window is not None:
@@ -123,11 +160,11 @@ def PerfMonPlotter(perf_mon_records, time_window = None):
 
     # 'timestamp','Core','IPC','LLC Misses','LLC Util (KB)','MBL (MB/s)'
     fig, axs = plt.subplots(ncols=2, nrows=2, sharex=True)
-    pqos_records_sum = pqos_records.groupby('timestamp').sum()
-    pqos_records_sum.plot(y='IPC', ax=axs[0][0])
-    pqos_records_sum.plot(y='MBL (MB/s)', ax=axs[0][1])
-    pqos_records_sum.plot(y='LLC Util (KB)', ax=axs[1][0])
-    pqos_records_sum.plot(y='LLC Misses', ax=axs[1][1])
+    pqos_records_sum = pqos_records.groupby("timestamp").sum()
+    pqos_records_sum.plot(y="IPC", ax=axs[0][0])
+    pqos_records_sum.plot(y="MBL (MB/s)", ax=axs[0][1])
+    pqos_records_sum.plot(y="LLC Util (KB)", ax=axs[1][0])
+    pqos_records_sum.plot(y="LLC Misses", ax=axs[1][1])
     axs[0][0].set_ylim([0, 20])
 
     # sns.relplot(data=pqos_records, x='timestamp', y='IPC',
