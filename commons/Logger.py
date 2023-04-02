@@ -7,7 +7,7 @@ import logging
 import sys
 
 
-sys.path = ['./', '../'] + sys.path
+sys.path = ["./", "../"] + sys.path
 from GenConfigs import *
 
 
@@ -19,14 +19,15 @@ def ScriptLogger(loggername, logfile):
     logger = logging.getLogger(loggername)
     logger.setLevel(logging.DEBUG)
     # create file handler which logs even debug messages
-    lfh = logging.FileHandler(FAAS_ROOT + '/logs/' + logfile)
+    lfh = logging.FileHandler(FAAS_ROOT + "/logs/" + logfile)
     lfh.setLevel(logging.DEBUG)
     # create console handler with a higher log level
     lch = logging.StreamHandler()
     lch.setLevel(logging.ERROR)
     # create formatter and add it to the handlers
     formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     lfh.setFormatter(formatter)
     lch.setFormatter(formatter)
     # add the handlers to the logger

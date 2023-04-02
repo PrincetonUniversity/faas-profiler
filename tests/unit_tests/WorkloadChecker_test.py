@@ -13,10 +13,10 @@ class TestWorkloadChecker(unittest.TestCase):
         self.assertNotEqual(len(supported_distributions), 0)
 
     def test_CheckWorkloadValidity(self):
-        workload = ReadJSONConfig('tests/test_data/sample_workload_configs.json')
+        workload = ReadJSONConfig("tests/test_data/sample_workload_configs.json")
         valid = CheckWorkloadValidity(workload)
         self.assertTrue(valid)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
