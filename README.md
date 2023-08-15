@@ -11,17 +11,16 @@ Mohammad Shahrad, Jonathan Balkind, and David Wentzlaff. "[Architectural Implica
 
 ## Setting Things Up
 
-### Set up OpenWhisk
+### Set up OpenWhisk if testing locally
+[You don't need this if you intend to use the *generic endpoint* mode to test remote functions.]
 
 FaaSProfiler has been fully tested on [OpenWhisk](https://github.com/apache/openwhisk). Please make sure to set up and install [OpenWhisk](https://github.com/apache/openwhisk) before using FaaSProfiler.
 
 **Important Note**: Some of the default [OpenWhisk configuration](https://github.com/apache/openwhisk/blob/master/ansible/group_vars/all) limits might be too restrictive for your setup. Do not forget to configure those parameters (particularly these: `invocationsPerMinute`, `concurrentInvocations`, `firesPerMinute`, and `sequenceMaxLength`).
 
-**Note**: We plan to add support for other popular serverless platforms. Help from the community is highly appreciated.
-
 ### Configure  FaaSProfiler
 
-After cloning this repo run the one-time configuration:
+After cloning this repo run the one-time configuration script:
 ```
 bash configure.sh
 ```
@@ -87,12 +86,12 @@ The [Comparative Analyzer](./comparative_analyzer) module compares the results o
 
 Environment/Tool | Tested Version(s)
 ---------------- | --------------
-Python | Python 3.x
+Python 3.8 (fully tested) | Python 3.10 (partially tested)
 OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS
 
 Python Library | Latest Tested Version
 ---------------- | --------------
-requests-futures | 1.0.0
+requests-futures | 1.0.1
 matplotlib | 3.3.3
 numpy | 1.19.5
 pandas | 1.2.0
