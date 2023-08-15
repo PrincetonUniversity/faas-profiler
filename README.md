@@ -86,12 +86,12 @@ The [Comparative Analyzer](./comparative_analyzer) module compares the results o
 
 Environment/Tool | Tested Version(s)
 ---------------- | --------------
-Python | Python 3.x
+Python 3.8 (fully tested) | Python 3.10 (partially tested)
 OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS
 
 Python Library | Latest Tested Version
 ---------------- | --------------
-requests-futures | 1.0.0
+requests-futures | 1.0.1
 matplotlib | 3.3.3
 numpy | 1.19.5
 pandas | 1.2.0
