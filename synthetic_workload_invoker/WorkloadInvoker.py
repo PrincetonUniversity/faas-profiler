@@ -67,7 +67,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
     """
     if len(instance_times) == 0:
         return False
-    session = FuturesSession(max_workers=15)
+    session = FuturesSession(max_workers=16)
     url = base_url + action
     parameters = {"blocking": blocking_cli, "result": RESULT}
     authentication = (user_pass[0], user_pass[1])
@@ -114,7 +114,7 @@ def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data
     This function is used to invoke a function with binary data as input.
     """
     url = base_gust_url + action
-    session = FuturesSession(max_workers=15)
+    session = FuturesSession(max_workers=16)
     if len(instance_times) == 0:
         return False
     after_time, before_time = 0, 0
@@ -153,7 +153,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
         logger.error("Invalid URL: " + url)
         return False
 
-    session = FuturesSession(max_workers=100)
+    session = FuturesSession(max_workers=16)
     parameters = {"blocking": blocking_cli, "result": RESULT}
     after_time, before_time = 0, 0
 
@@ -300,6 +300,9 @@ def main(argv):
     logger.info("Test started")
     for thread in threads:
         thread.start()
+    logger.info("Waiting for invocation threads to join")
+    for thread in threads:
+        thread.join()
     logger.info("Test ended")
 
     return True
