@@ -15,6 +15,7 @@ import sys
 import time
 import threading
 import logging
+import validators
 
 # Local imports
 sys.path = ["./", "../"] + sys.path
@@ -39,6 +40,9 @@ RESULT = "true"
 
 
 def PROCESSInstanceGenerator(instance, instance_script, instance_times, blocking_cli):
+    """
+    Deprecated. This function was used to invoke a function in OpenWhisk using new processes.
+    """
     if len(instance_times) == 0:
         return False
     after_time, before_time = 0, 0
@@ -58,6 +62,9 @@ def PROCESSInstanceGenerator(instance, instance_script, instance_times, blocking
 
 
 def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=None):
+    """
+    This function is used to invoke a function in OpenWhisk.
+    """
     if len(instance_times) == 0:
         return False
     session = FuturesSession(max_workers=15)
@@ -104,7 +111,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
 
 def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data_file):
     """
-    TODO: Automate content type
+    This function is used to invoke a function with binary data as input.
     """
     url = base_gust_url + action
     session = FuturesSession(max_workers=15)
@@ -137,7 +144,13 @@ def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data
 
 
 def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
+    """
+    This function is used to invoke a function in a generic HTTP endpoint.
+    """
     if len(instance_times) == 0:
+        return False
+    if (validators.url(url) != True):
+        logger.error("Invalid URL: " + url)
         return False
 
     session = FuturesSession(max_workers=100)
@@ -146,6 +159,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
 
     st = 0
     for t in instance_times:
+        # st: sleep time
         st = st + t - (after_time - before_time)
         before_time = time.time()
         if st > 0:
@@ -161,7 +175,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
     return True
 
 
-def CreateActionInvocationTreads(workload, all_events):
+def CreateActionInvocationThreads(workload, all_events):
     threads = []
     for (instance, instance_times) in all_events.items():
         blocking_cli = workload["blocking_cli"]
@@ -244,7 +258,7 @@ def main(argv):
         base_url = APIHOST + "/api/v1/namespaces/" + NAMESPACE + "/actions/"
         base_gust_url = APIHOST + "/api/v1/web/guest/default/"
 
-    threads = CreateActionInvocationTreads(workload, all_events)
+    threads = CreateActionInvocationThreads(workload, all_events)
 
     # Dump Test Metadata
     os.system(
