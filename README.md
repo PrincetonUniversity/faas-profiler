@@ -11,17 +11,16 @@ Mohammad Shahrad, Jonathan Balkind, and David Wentzlaff. "[Architectural Implica
 
 ## Setting Things Up
 
-### Set up OpenWhisk
+### Set up OpenWhisk if testing locally
+[You don't need this if you intend to use the *generic endpoint* mode to test remote functions.]
 
 FaaSProfiler has been fully tested on [OpenWhisk](https://github.com/apache/openwhisk). Please make sure to set up and install [OpenWhisk](https://github.com/apache/openwhisk) before using FaaSProfiler.
 
 **Important Note**: Some of the default [OpenWhisk configuration](https://github.com/apache/openwhisk/blob/master/ansible/group_vars/all) limits might be too restrictive for your setup. Do not forget to configure those parameters (particularly these: `invocationsPerMinute`, `concurrentInvocations`, `firesPerMinute`, and `sequenceMaxLength`).
 
-**Note**: We plan to add support for other popular serverless platforms. Help from the community is highly appreciated.
-
 ### Configure  FaaSProfiler
 
-After cloning this repo run the one-time configuration:
+After cloning this repo run the one-time configuration script:
 ```
 bash configure.sh
 ```
