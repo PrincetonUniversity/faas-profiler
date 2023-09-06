@@ -86,7 +86,7 @@ The [Comparative Analyzer](./comparative_analyzer) module compares the results o
 
 Environment/Tool | Tested Version(s)
 ---------------- | --------------
-Python 3.8 (fully tested) | Python 3.10 (partially tested)
+Python | 3.8 (fully tested), 3.10 (partially tested)
 OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS
 
 Python Library | Latest Tested Version
