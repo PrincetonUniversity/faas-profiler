@@ -18,7 +18,7 @@ FaaSProfiler has been fully tested on [OpenWhisk](https://github.com/apache/open
 
 **Important Note**: Some of the default [OpenWhisk configuration](https://github.com/apache/openwhisk/blob/master/ansible/group_vars/all) limits might be too restrictive for your setup. Do not forget to configure those parameters (particularly these: `invocationsPerMinute`, `concurrentInvocations`, `firesPerMinute`, and `sequenceMaxLength`).
 
-### Configure  FaaSProfiler
+### Configure FaaSProfiler
 
 After cloning this repo run the one-time configuration script:
 ```
