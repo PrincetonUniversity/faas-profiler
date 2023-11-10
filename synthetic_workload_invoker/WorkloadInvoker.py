@@ -153,7 +153,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
         logger.error("Invalid URL: " + url)
         return False
 
-    session = FuturesSession(max_workers=16)
+    session = FuturesSession(max_workers=300)
     parameters = {"blocking": blocking_cli, "result": RESULT}
     after_time, before_time = 0, 0
 
