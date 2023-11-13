@@ -48,18 +48,21 @@ def EnforceActivityWindow(start_time, end_time, instance_events):
     """
     events_iit = []
     events_abs = [0] + instance_events
-    event_times = []
-    last_val = 0
-    for i in range(1, len(events_abs) + 1):
-        last_val += events_abs[i-1]
-        event_times.append(last_val)
-    event_times = [e for e in event_times if (e > start_time) and (e < end_time)]
-    try:
-        events_iit = [event_times[0]] + [
-            event_times[i] - event_times[i - 1] for i in range(1, len(event_times))
-        ]
-    except:
-        pass
+
+    # Calculating absolute event times
+    event_times = np.cumsum(instance_events, dtype=np.float64)
+
+    # Filter event times within the activity window
+    valid_event_times = event_times[
+        (event_times > start_time) & (event_times < end_time)
+    ]
+
+    if len(valid_event_times) == 0:
+        return events_iit
+
+    # Calculate inter-arrival times from filtered event times
+    events_iit = [valid_event_times[0]] + np.diff(valid_event_times).tolist()
+
     return events_iit
 
 
@@ -76,7 +79,7 @@ def GenericEventGenerator(workload):
     random_seed = workload["random_seed"]
     logger_eg.info("random_seed: " + str(random_seed))
 
-    for (instance, desc) in workload["instances"].items():
+    for instance, desc in workload["instances"].items():
         if "interarrivals_list" in desc.keys():
             instance_events = desc["interarrivals_list"]
             logger_eg.info("Read the invocation time trace for " + instance)
