@@ -143,7 +143,7 @@ def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data
     return True
 
 
-def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
+def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data, host):
     """
     This function is used to invoke a function in a generic HTTP endpoint.
     """
@@ -166,7 +166,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
             time.sleep(st)
         future = session.post(
             url,
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": "application/json", "Host": host},
             data=json.dumps(data),
             verify=False,
         )
@@ -203,10 +203,11 @@ def CreateActionInvocationThreads(workload, all_events):
         elif workload["endpoint"] == "generic":
             url = workload["instances"][instance]["url"]
             data = workload["instances"][instance]["data"]
+            host = workload["instances"][instance]["host"]
             threads.append(
                 threading.Thread(
                     target=HTTPInstanceGeneratorGeneric,
-                    args=[instance_times, blocking_cli, url, data],
+                    args=[instance_times, blocking_cli, url, data, host],
                 )
             )
         pass
