@@ -209,7 +209,6 @@ def CreateActionInvocationThreads(workload, all_events):
                     args=[instance_times, blocking_cli, url, data],
                 )
             )
-        pass
 
     return threads
 

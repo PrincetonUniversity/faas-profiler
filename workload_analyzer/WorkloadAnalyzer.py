@@ -178,9 +178,9 @@ def NormalizeMemoryValue(mem_string):
     """
     if mem_string[-1] == "G":
         return float(mem_string[:-1])
-    elif mem_string[-1] == "M":
+    if mem_string[-1] == "M":
         return float(mem_string[:-1]) / 1024.0
-    elif mem_string[-1] == "K":
+    if mem_string[-1] == "K":
         return float(mem_string[:-1]) / (1024 * 1024.0)
 
 
