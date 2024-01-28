@@ -221,7 +221,7 @@ def GetControlGroupsRecords(since=None):
         "docker_tasks": [],
         "memory": [],
     }
-    if since == None:
+    if since is None:
         logger.error("No since parameter entered!")
         return None
     log_path = FAAS_ROOT + "/logs"

@@ -73,7 +73,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
     authentication = (user_pass[0], user_pass[1])
     after_time, before_time = 0, 0
 
-    if param_file == None:
+    if param_file is None:
         st = 0
         for t in instance_times:
             st = st + t - (after_time - before_time)
@@ -149,7 +149,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
     """
     if len(instance_times) == 0:
         return False
-    if (validators.url(url) != True):
+    if (validators.url(url) is False):
         logger.error("Invalid URL: " + url)
         return False
 
