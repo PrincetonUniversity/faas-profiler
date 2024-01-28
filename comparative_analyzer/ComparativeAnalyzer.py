@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import argparse
 from datetime import datetime
-import imp
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import (
     inset_axes,
@@ -19,7 +18,6 @@ import pandas as pd
 import pickle
 import seaborn as sns
 import sys
-import time
 
 sys.path = ["./", "../"] + sys.path
 
