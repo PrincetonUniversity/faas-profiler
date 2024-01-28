@@ -6,8 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 
 # Standard imports
+import argparse
 import json
-from optparse import OptionParser
 import os
 from requests_futures.sessions import FuturesSession
 import subprocess
@@ -219,15 +219,15 @@ def main(argv):
     """
     logger.info("Workload Invoker started")
     print("Log file -> logs/SWI.log")
-    parser = OptionParser()
-    parser.add_option(
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
         "-c",
         "--config_json",
         dest="config_json",
         help="The input json config file describing the synthetic workload.",
         metavar="FILE",
     )
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
 
     if not CheckJSONConfig(options.config_json):
         logger.error("You should specify a JSON config file using -c option!")

@@ -4,10 +4,9 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-
+import argparse
 from datetime import datetime
 import imp
-from optparse import OptionParser
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import (
     inset_axes,
@@ -212,29 +211,29 @@ def main(argv=None):
     """
     The main function.
     """
-    parser = OptionParser()
-    parser.add_option(
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
         "-s",
         "--since",
         dest="since",
         help="compare archives since time",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-p",
         "--plot",
         dest="plot",
         help="plots default comparative test results",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-c",
         "--customized_plot",
         dest="customized_plot",
         help="specify a customized plotting string",
         metavar="FILE",
     )
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
 
     logger.info("Comparative Analyzer started")
     print("Log file -> logs/CA.log")
