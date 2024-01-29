@@ -39,9 +39,10 @@ base_gust_url = []
 RESULT = "true"
 
 
-def PROCESSInstanceGenerator(instance, instance_script, instance_times, blocking_cli):
+def PROCESSInstanceGenerator(instance_script, instance_times, blocking_cli):
     """
     Deprecated. This function was used to invoke a function in OpenWhisk using new processes.
+    You can use this approach, but it is not recommended due to high overhead.
     """
     if len(instance_times) == 0:
         return False
@@ -149,7 +150,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
     """
     if len(instance_times) == 0:
         return False
-    if (validators.url(url) is False):
+    if validators.url(url) is False:
         logger.error("Invalid URL: " + url)
         return False
 
