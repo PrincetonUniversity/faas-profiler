@@ -6,8 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 
 # Standard imports
+import argparse
 import json
-from optparse import OptionParser
 import os
 from requests_futures.sessions import FuturesSession
 import subprocess
@@ -39,9 +39,10 @@ base_gust_url = []
 RESULT = "true"
 
 
-def PROCESSInstanceGenerator(instance, instance_script, instance_times, blocking_cli):
+def PROCESSInstanceGenerator(instance_script, instance_times, blocking_cli):
     """
     Deprecated. This function was used to invoke a function in OpenWhisk using new processes.
+    You can use this approach, but it is not recommended due to high overhead.
     """
     if len(instance_times) == 0:
         return False
@@ -73,7 +74,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
     authentication = (user_pass[0], user_pass[1])
     after_time, before_time = 0, 0
 
-    if param_file == None:
+    if param_file is None:
         st = 0
         for t in instance_times:
             st = st + t - (after_time - before_time)
@@ -149,7 +150,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
     """
     if len(instance_times) == 0:
         return False
-    if (validators.url(url) != True):
+    if validators.url(url) is not True:
         logger.error("Invalid URL: " + url)
         return False
 
@@ -209,7 +210,6 @@ def CreateActionInvocationThreads(workload, all_events):
                     args=[instance_times, blocking_cli, url, data],
                 )
             )
-        pass
 
     return threads
 
@@ -220,15 +220,15 @@ def main(argv):
     """
     logger.info("Workload Invoker started")
     print("Log file -> logs/SWI.log")
-    parser = OptionParser()
-    parser.add_option(
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
         "-c",
         "--config_json",
         dest="config_json",
         help="The input json config file describing the synthetic workload.",
         metavar="FILE",
     )
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
 
     if not CheckJSONConfig(options.config_json):
         logger.error("You should specify a JSON config file using -c option!")

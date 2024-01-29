@@ -4,10 +4,10 @@
 # LICENSE file in the root directory of this source tree.
 
 import datetime
+import os
 from os.path import exists
 import unittest
 from comparative_analyzer.ComparativeAnalyzer import *
-import comparative_analyzer.ComparativeAnalyzer as CA
 
 
 class TestComparativeAnalyzer(unittest.TestCase):
@@ -27,9 +27,10 @@ class TestComparativeAnalyzer(unittest.TestCase):
         self.assertEqual(str(sampleDT), "2021-01-18 04:37:00")
 
     def test_ComparativeAnalyzer_Script(self):
-        CA.main()
+        os.system("./ComparativeAnalyzer -p")
         self.assertTrue(exists("sample_comparative_plot.png"))
 
 
 if __name__ == "__main__":
-    unittest.main()
+    runner = unittest.TextTestRunner()
+    runner.run(unittest.TestLoader().loadTestsFromTestCase(TestComparativeAnalyzer))

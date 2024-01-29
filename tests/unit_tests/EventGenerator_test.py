@@ -62,4 +62,5 @@ class TestEventGenerator(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    runner = unittest.TextTestRunner()
+    runner.run(unittest.TestLoader().loadTestsFromTestCase(TestEventGenerator))

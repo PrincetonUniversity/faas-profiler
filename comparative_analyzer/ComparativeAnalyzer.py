@@ -4,10 +4,8 @@
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-
+import argparse
 from datetime import datetime
-import imp
-from optparse import OptionParser
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import (
     inset_axes,
@@ -20,7 +18,6 @@ import pandas as pd
 import pickle
 import seaborn as sns
 import sys
-import time
 
 sys.path = ["./", "../"] + sys.path
 
@@ -208,34 +205,10 @@ def RelativeDegradation(combined_stat_df):
     plt.close()
 
 
-def main(argv=None):
+def main(options):
     """
     The main function.
     """
-    parser = OptionParser()
-    parser.add_option(
-        "-s",
-        "--since",
-        dest="since",
-        help="compare archives since time",
-        action="store_true",
-    )
-    parser.add_option(
-        "-p",
-        "--plot",
-        dest="plot",
-        help="plots default comparative test results",
-        action="store_true",
-    )
-    parser.add_option(
-        "-c",
-        "--customized_plot",
-        dest="customized_plot",
-        help="specify a customized plotting string",
-        metavar="FILE",
-    )
-    (options, args) = parser.parse_args()
-
     logger.info("Comparative Analyzer started")
     print("Log file -> logs/CA.log")
 
@@ -259,7 +232,7 @@ def main(argv=None):
         archive_files, options.plot
     )
 
-    if (options.plot) or (argv is None):
+    if options.plot:
         ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
     elif options.customized_plot is not None:
         cp = options.customized_plot.replace(".py", "")
@@ -274,4 +247,30 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    """
+    The main function.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-s",
+        "--since",
+        dest="since",
+        help="compare archives since time",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-p",
+        "--plot",
+        dest="plot",
+        help="plots default comparative test results",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-c",
+        "--customized_plot",
+        dest="customized_plot",
+        help="specify a customized plotting string",
+        metavar="FILE",
+    )
+    options = parser.parse_args()
+    main(options)

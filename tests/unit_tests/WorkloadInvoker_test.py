@@ -12,7 +12,7 @@ class TestWorkloadInvoker(unittest.TestCase):
         status = HTTPInstanceGeneratorGeneric(
             instance_times=[1.0, 1.0, 1.0, 1.0],
             blocking_cli=0,
-            url="http://localhost:8080",
+            url="http://127.0.0.1:8080",
             data="",
         )
         self.assertTrue(status)
@@ -21,7 +21,7 @@ class TestWorkloadInvoker(unittest.TestCase):
         status = HTTPInstanceGeneratorGeneric(
             instance_times=[],
             blocking_cli=0,
-            url="http://localhost:8080",
+            url="http://127.0.0.1:8080",
             data="",
         )
         self.assertFalse(status)
@@ -46,4 +46,5 @@ class TestWorkloadInvoker(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    runner = unittest.TextTestRunner()
+    runner.run(unittest.TestLoader().loadTestsFromTestCase(TestWorkloadInvoker))

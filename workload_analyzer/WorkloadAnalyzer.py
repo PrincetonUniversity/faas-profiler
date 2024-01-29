@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-# Copyright (c) 2019 Princeton University
+# Copyright (c) 2019 Princeton University, 2024 UBC
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
 # Standard
+import argparse
 from datetime import datetime
 import json
-from optparse import OptionParser
 import os
 from os.path import isfile, join
 import pandas as pd
@@ -178,9 +178,9 @@ def NormalizeMemoryValue(mem_string):
     """
     if mem_string[-1] == "G":
         return float(mem_string[:-1])
-    elif mem_string[-1] == "M":
+    if mem_string[-1] == "M":
         return float(mem_string[:-1]) / 1024.0
-    elif mem_string[-1] == "K":
+    if mem_string[-1] == "K":
         return float(mem_string[:-1]) / (1024 * 1024.0)
 
 
@@ -221,7 +221,7 @@ def GetControlGroupsRecords(since=None):
         "docker_tasks": [],
         "memory": [],
     }
-    if since == None:
+    if since is None:
         logger.error("No since parameter entered!")
         return None
     log_path = FAAS_ROOT + "/logs"
@@ -274,53 +274,53 @@ def main(argv):
     """
     The main function.
     """
-    parser = OptionParser()
-    parser.add_option(
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
         "-v",
         "--verbose",
         dest="verbose",
         help="prints the detailed test data",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-p", "--plot", dest="plot", help="plots the test results", action="store_true"
     )
-    parser.add_option(
+    parser.add_argument(
         "-s",
         "--save_plot",
         dest="save_plot",
         help="save test result plots",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-a",
         "--archive",
         dest="archive",
         help="archive the test results in an pickle file",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-c",
         "--capacity_factor",
         dest="capacity_factor",
         help="returns the capacity factor",
         action="store_true",
     )
-    parser.add_option(
+    parser.add_argument(
         "-o",
         "--override_testname",
         dest="override_testname",
         help="override the JSON test name",
         metavar="FILE",
     )
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--read_results",
         dest="read_results",
         help="gather also the results of function invocations",
         action="store_true",
     )
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()
 
     logger.info("Workload Analyzer started")
     print("Log file -> logs/WA.log")

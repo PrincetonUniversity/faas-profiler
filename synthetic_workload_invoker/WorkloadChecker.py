@@ -67,7 +67,7 @@ def CheckWorkloadValidity(workload):
                 "Please enter a valid value for test_duration_in_seconds field in the config file."
             )
             return False
-        elif int(test_duration_in_seconds) <= 0:
+        if int(test_duration_in_seconds) <= 0:
             logger_wlch.error("test_duration_in_seconds should be greater than zero!")
             return False
     except:
