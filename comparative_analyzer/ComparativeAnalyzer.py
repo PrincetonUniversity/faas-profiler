@@ -205,7 +205,48 @@ def RelativeDegradation(combined_stat_df):
     plt.close()
 
 
-def main(argv=None):
+def main(options):
+    """
+    The main function.
+    """
+    logger.info("Comparative Analyzer started")
+    print("Log file -> logs/CA.log")
+
+    ls_files = os.popen("ls -l " + FAAS_ROOT + "/data_archive/*.pkl")
+    archive_files = []
+    for line in ls_files:
+        archive_files.append([line[line.index("data_archive") + 13 : -1], None])
+        archive_files[-1][1] = GetTimeFromDFName(archive_files[-1][0])
+
+    if len(archive_files) == 0:
+        logger.error("No test archive found in " + archive_folder + "!")
+        return False
+
+    if options.since:
+        since = datetime.fromtimestamp(float(options.since) / 1000)
+        archive_files = [
+            test_df_file for test_df_file in archive_files if test_df_file[1] > since
+        ]
+
+    [combined_test_df, combined_perf_df_dic, combined_stat_df] = CompareArchives(
+        archive_files, options.plot
+    )
+
+    if options.plot:
+        ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
+    elif options.customized_plot is not None:
+        cp = options.customized_plot.replace(".py", "")
+        if "/" in cp:
+            if cp[1] == "/":
+                cp = cp[2:]
+            cp = cp[cp.index("/") + 1 :]
+        module = __import__(cp)
+        module.ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
+
+    return True
+
+
+if __name__ == "__main__":
     """
     The main function.
     """
@@ -232,43 +273,4 @@ def main(argv=None):
         metavar="FILE",
     )
     options = parser.parse_args()
-
-    logger.info("Comparative Analyzer started")
-    print("Log file -> logs/CA.log")
-
-    ls_files = os.popen("ls -l " + FAAS_ROOT + "/data_archive/*.pkl")
-    archive_files = []
-    for line in ls_files:
-        archive_files.append([line[line.index("data_archive") + 13 : -1], None])
-        archive_files[-1][1] = GetTimeFromDFName(archive_files[-1][0])
-
-    if len(archive_files) == 0:
-        logger.error("No test archive found in " + archive_folder + "!")
-        return False
-
-    if options.since:
-        since = datetime.fromtimestamp(float(options.since) / 1000)
-        archive_files = [
-            test_df_file for test_df_file in archive_files if test_df_file[1] > since
-        ]
-
-    [combined_test_df, combined_perf_df_dic, combined_stat_df] = CompareArchives(
-        archive_files, options.plot
-    )
-
-    if (options.plot) or (argv is None):
-        ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
-    elif options.customized_plot is not None:
-        cp = options.customized_plot.replace(".py", "")
-        if "/" in cp:
-            if cp[1] == "/":
-                cp = cp[2:]
-            cp = cp[cp.index("/") + 1 :]
-        module = __import__(cp)
-        module.ComparativePlotting(t_df=combined_test_df, p_df_dic=combined_perf_df_dic)
-
-    return True
-
-
-if __name__ == "__main__":
-    main(sys.argv)
+    main(options)
