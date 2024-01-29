@@ -150,7 +150,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
     """
     if len(instance_times) == 0:
         return False
-    if validators.url(url) is False:
+    if validators.url(url) is not True:
         logger.error("Invalid URL: " + url)
         return False
 
