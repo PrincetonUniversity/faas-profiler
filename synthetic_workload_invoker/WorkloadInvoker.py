@@ -164,6 +164,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data, host):
         before_time = time.time()
         if st > 0:
             time.sleep(st)
+        curr_time = time.time()
         future = session.post(
             url,
             headers={"Content-Type": "application/json", "Host": host},
@@ -172,8 +173,23 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data, host):
         )
         after_time = time.time()
 
+        future.add_done_callback(make_callback(after_time))
+
     return True
 
+
+
+def make_callback(before_time):
+
+    def callback(future):
+        try:
+            result = future.result()  # Get the result of the Future
+            response_dict = result.json()  # Parse JSON response into a dictionary
+            print(f"response_time: {response_dict['time_taken'] + 0.0006}")
+        except Exception as e:
+            print(f"Exception: {e}")
+
+    return callback
 
 def CreateActionInvocationThreads(workload, all_events):
     threads = []

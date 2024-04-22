@@ -2,8 +2,10 @@
 GenConfigs.py
 
 # logs and data archives
+*.pdf
 *.log
 *.pkl
+*.pickle
 
 # compiled bytecode and other caches
 __pycache__/
