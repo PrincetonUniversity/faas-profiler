@@ -9,5 +9,8 @@ GenConfigs.py
 __pycache__/
 *.coverage
 
+# virtualenv
+venv_faasprofiler/
+
 # MacOS DS_Store files
 .DS_Store

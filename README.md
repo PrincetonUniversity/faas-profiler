@@ -24,6 +24,14 @@ After cloning this repo run the one-time configuration script:
 ```
 bash configure.sh
 ```
+Activate the virtual environment:
+```
+source venv_faasprofiler/bin/activate
+```
+You can deactivate the virtual environment at the end by running:
+```
+deactivate
+```
 
 ## Usage Guide
 
@@ -86,8 +94,8 @@ The [Comparative Analyzer](./comparative_analyzer) module compares the results o
 
 Environment/Tool | Tested Version(s)
 ---------------- | --------------
-Python | 3.8 (fully tested), 3.10 (partially tested)
-OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS
+Python | 3.8 (fully tested), 3.10 (partially tested), 3.12 (partially tested)
+OS | Ubuntu 16.04.4 LTS, Ubuntu 20.04.1 LTS, Ubuntu 24.04 LTS
 
 Python Library | Latest Tested Version
 ---------------- | --------------
