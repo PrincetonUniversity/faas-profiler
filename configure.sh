@@ -4,16 +4,17 @@
 # Installing basic dependencies if needed
 sudo apt-get install -y moreutils
 
-# Check if python3.10 is installed
-if ! command -v python3.10 &> /dev/null
+# Check if python3.12 is installed
+if ! command -v python3.12 &> /dev/null
 then
-    echo "Python 3.10 could not be found. Installing..."
+    echo "Python 3.12 could not be found. Installing..."
     sudo apt-get install -y software-properties-common
     sudo add-apt-repository -y ppa:deadsnakes/ppa
     sudo apt-get update
-    sudo apt-get install -y python3.10
+    sudo apt-get install -y python3.12
+    sudo apt install python3.12-venv
 else
-    echo "Python 3.10 is already installed."
+    echo "Python 3.12 is already installed."
 fi
 
 # Check if pip is installed
@@ -25,8 +26,21 @@ else
     echo "Pip is already installed."
 fi
 
+# Create a python virtual environment 
+if [ ! -d "venv_faasprofiler" ]
+then
+    echo "Creating virtual environment..."
+    python3.12 -m venv venv_faasprofiler
+else
+    echo "Virtual environment already exists."
+fi
+
+# Activate the virtual environment
+source venv_faasprofiler/bin/activate
+echo "Directory data_archive already exists."
+
 # Install python dependencies
-python3.10 -m pip install -r requirements.txt
+python3.12 -m pip install -r requirements.txt
 
 # Configure path variables used by the platform 
 ROOTLINE='FAAS_ROOT="'$(echo $PWD)'"'

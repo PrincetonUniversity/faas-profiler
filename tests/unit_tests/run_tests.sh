@@ -10,6 +10,7 @@ if [ ! -f "$GenConfigFile" ]; then
 fi
 
 cd ../../
+source venv_faasprofiler/bin/activate
 cp tests/test_data/2021_01_18_04_37_test_data_run.pkl data_archive
 python3 -m coverage run -m unittest tests/unit_tests/*_test.py
 python3 -m coverage report -m *.py
