@@ -7,6 +7,7 @@
 
 # Standard imports
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 import json
 import os
 from requests_futures.sessions import FuturesSession
@@ -154,11 +155,12 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
         logger.error("Invalid URL: " + url)
         return False
 
-    session = FuturesSession(max_workers=16)
+    session = FuturesSession(executor=ProcessPoolExecutor(max_workers=os.cpu_count()))
     parameters = {"blocking": blocking_cli, "result": RESULT}
     after_time, before_time = 0, 0
 
     st = 0
+    json_data = json.dumps(data)
     for t in instance_times:
         # st: sleep time
         st = st + t - (after_time - before_time)
@@ -168,7 +170,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
         future = session.post(
             url,
             headers={"Content-Type": "application/json"},
-            data=json.dumps(data),
+            data=json_data,
             verify=False,
         )
         after_time = time.time()
@@ -178,7 +180,7 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
 
 def CreateActionInvocationThreads(workload, all_events):
     threads = []
-    for (instance, instance_times) in all_events.items():
+    for instance, instance_times in all_events.items():
         blocking_cli = workload["blocking_cli"]
         if workload["endpoint"] == "local_openwhisk":
             action = workload["instances"][instance]["application"]

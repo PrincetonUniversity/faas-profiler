@@ -1,0 +1,21 @@
+{
+    "test_name": "example_test",
+    "test_duration_in_seconds": 15,
+    "random_seed": 100,
+    "blocking_cli": false,
+    "endpoint": "generic",
+    "instances":{
+        "instance1":{
+            "application": "example_app1",
+            "url": "https://127.0.0.1",
+            "data": {},
+            "distribution": "Uniform",
+            "rate": 2,
+            "activity_window": [5, 15]
+        }
+    },
+    "perf_monitoring":{
+        "runtime_script": null,
+        "post_script": null
+    }
+}

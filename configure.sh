@@ -15,6 +15,7 @@ then
     sudo apt install python3.12-venv
 else
     echo "Python 3.12 is already installed."
+    sudo apt install python3.12-venv
 fi
 
 # Check if pip is installed
