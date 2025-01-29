@@ -40,12 +40,12 @@ base_gust_url = []
 RESULT = "true"
 
 
-def PROCESSInstanceGenerator(instance_script, instance_times, blocking_cli):
+def PROCESSInstanceGenerator(instance_script, IATs, blocking_cli):
     """
     Deprecated. This function was used to invoke a function in OpenWhisk using new processes.
     You can use this approach, but it is not recommended due to high overhead.
     """
-    if len(instance_times) == 0:
+    if len(IATs) == 0:
         return False
     after_time, before_time = 0, 0
 
@@ -54,7 +54,7 @@ def PROCESSInstanceGenerator(instance_script, instance_times, blocking_cli):
     else:
         instance_script = instance_script + " &"
 
-    for t in instance_times:
+    for t in IATs:
         time.sleep(max(0, t - (after_time - before_time)))
         before_time = time.time()
         os.system(instance_script)
@@ -63,11 +63,11 @@ def PROCESSInstanceGenerator(instance_script, instance_times, blocking_cli):
     return True
 
 
-def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=None):
+def HTTPInstanceGeneratorOW(action, IATs, blocking_cli, param_file=None):
     """
     This function is used to invoke a function in OpenWhisk.
     """
-    if len(instance_times) == 0:
+    if len(IATs) == 0:
         return False
     session = FuturesSession(max_workers=16)
     url = base_url + action
@@ -77,7 +77,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
 
     if param_file is None:
         st = 0
-        for t in instance_times:
+        for t in IATs:
             st = st + t - (after_time - before_time)
             before_time = time.time()
             if st > 0:
@@ -94,7 +94,7 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
                 param_file_body = json.load(f)
                 param_file_cache[param_file] = param_file_body
 
-        for t in instance_times:
+        for t in IATs:
             st = t - (after_time - before_time)
             if st > 0:
                 time.sleep(st)
@@ -111,13 +111,13 @@ def HTTPInstanceGeneratorOW(action, instance_times, blocking_cli, param_file=Non
     return True
 
 
-def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data_file):
+def BinaryDataHTTPInstanceGeneratorOW(action, IATs, blocking_cli, data_file):
     """
     This function is used to invoke a function with binary data as input.
     """
     url = base_gust_url + action
     session = FuturesSession(max_workers=16)
-    if len(instance_times) == 0:
+    if len(IATs) == 0:
         return False
     after_time, before_time = 0, 0
 
@@ -127,7 +127,7 @@ def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data
         data = open(data_file, "rb").read()
         binary_data_cache[data_file] = data
 
-    for t in instance_times:
+    for t in IATs:
         st = t - (after_time - before_time)
         if st > 0:
             time.sleep(st)
@@ -179,7 +179,7 @@ def HTTPInstanceGeneratorGeneric(IATs, blocking_cli, url, data):
 
 def CreateActionInvocationThreads(workload, all_events):
     threads = []
-    for instance, instance_times in all_events.items():
+    for instance, IATs in all_events.items():
         blocking_cli = workload["blocking_cli"]
         if workload["endpoint"] == "local_openwhisk":
             action = workload["instances"][instance]["application"]
@@ -192,14 +192,14 @@ def CreateActionInvocationThreads(workload, all_events):
                 threads.append(
                     threading.Thread(
                         target=BinaryDataHTTPInstanceGeneratorOW,
-                        args=[action, instance_times, blocking_cli, data_file],
+                        args=[action, IATs, blocking_cli, data_file],
                     )
                 )
             else:
                 threads.append(
                     threading.Thread(
                         target=HTTPInstanceGeneratorOW,
-                        args=[action, instance_times, blocking_cli, param_file],
+                        args=[action, IATs, blocking_cli, param_file],
                     )
                 )
         elif workload["endpoint"] == "generic":
@@ -208,7 +208,7 @@ def CreateActionInvocationThreads(workload, all_events):
             threads.append(
                 threading.Thread(
                     target=HTTPInstanceGeneratorGeneric,
-                    args=[instance_times, blocking_cli, url, data],
+                    args=[IATs, blocking_cli, url, data],
                 )
             )
 
