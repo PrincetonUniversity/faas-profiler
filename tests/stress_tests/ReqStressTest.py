@@ -4,7 +4,7 @@ import os
 import sys
 import time
 
-test_rates = [50, 100, 200, 500, 1000, 2000, 5000]
+test_rates = [1000, 2000, 5000]
 
 
 def ParseLog(log_file):
@@ -13,6 +13,8 @@ def ParseLog(log_file):
 
     start_time = 0
     end_time = 0
+    lag = 0
+
     for line in lines:
         if "Test started" in line:
             start_time = line.split(" - w")[0]
@@ -24,13 +26,16 @@ def ParseLog(log_file):
             ms = int(end_time.split(",")[1])
             end_time = time.mktime(time.strptime(end_time, "%Y-%m-%d %H:%M:%S,%f"))
             end_time += ms / 1000
+        if "fell behind" in line:
+            lag = float(line.split("behind ")[1].split(" nanoseconds")[0])
 
-    return end_time - start_time
+    logged_duration = end_time - start_time
+    return (logged_duration, lag)
 
 
 def main():
 
-    results = {"test_rates": [], "durations": [], "logged_durations": []}
+    results = {"test_rates": [], "durations": [], "logged_durations": [], "lag": []}
 
     with open(
         os.path.join(
@@ -66,13 +71,14 @@ def main():
 
         time.sleep(0.5)
 
-        log_duration = ParseLog(
+        (logged_duration, lag) = ParseLog(
             os.path.join(os.path.dirname(__file__), "..", "..", "logs", "SWI.log")
         )
 
         results["test_rates"].append(test_rate)
         results["durations"].append(end - start)
-        results["logged_durations"].append(log_duration)
+        results["logged_durations"].append(logged_duration)
+        results["lag"].append(lag)
 
     with open(
         os.path.join(os.path.dirname(__file__), "stress_test_results.json"),

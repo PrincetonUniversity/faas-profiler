@@ -10,7 +10,7 @@ from synthetic_workload_invoker.WorkloadInvoker import *
 class TestWorkloadInvoker(unittest.TestCase):
     def test_HTTPInstanceGeneratorGenerics(self):
         status = HTTPInstanceGeneratorGeneric(
-            instance_times=[1.0, 1.0, 1.0, 1.0],
+            IATs=[1.0, 1.0, 1.0, 1.0],
             blocking_cli=0,
             url="http://127.0.0.1:8080",
             data="",
@@ -19,7 +19,7 @@ class TestWorkloadInvoker(unittest.TestCase):
 
     def test_HTTPInstanceGeneratorGenerics_with_empty_instance_times(self):
         status = HTTPInstanceGeneratorGeneric(
-            instance_times=[],
+            IATs=[],
             blocking_cli=0,
             url="http://127.0.0.1:8080",
             data="",
@@ -28,7 +28,7 @@ class TestWorkloadInvoker(unittest.TestCase):
 
     def test_HTTPInstanceGeneratorGenerics_with_empty_url(self):
         status = HTTPInstanceGeneratorGeneric(
-            instance_times=[1.0, 1.0, 1.0, 1.0],
+            IATs=[1.0, 1.0, 1.0, 1.0],
             blocking_cli=0,
             url="",
             data="",
@@ -37,7 +37,7 @@ class TestWorkloadInvoker(unittest.TestCase):
 
     def test_HTTPInstanceGeneratorGenerics_with_invalid_url(self):
         status = HTTPInstanceGeneratorGeneric(
-            instance_times=[1.0, 1.0, 1.0, 1.0],
+            IATs=[1.0, 1.0, 1.0, 1.0],
             blocking_cli=0,
             url="www.http.s",
             data="",

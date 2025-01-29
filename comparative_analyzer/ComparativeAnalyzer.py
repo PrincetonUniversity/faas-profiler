@@ -11,7 +11,6 @@ from mpl_toolkits.axes_grid1.inset_locator import (
     inset_axes,
     mark_inset,
     zoomed_inset_axes,
-    InsetPosition,
 )
 import os
 import pandas as pd
