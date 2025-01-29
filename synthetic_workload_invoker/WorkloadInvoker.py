@@ -145,26 +145,26 @@ def BinaryDataHTTPInstanceGeneratorOW(action, instance_times, blocking_cli, data
     return True
 
 
-def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
+def HTTPInstanceGeneratorGeneric(IATs, blocking_cli, url, data):
     """
     This function is used to invoke a function in a generic HTTP endpoint.
     """
-    if len(instance_times) == 0:
+    if len(IATs) == 0:
         return False
-    if validators.url(url) is not True:
-        logger.error("Invalid URL: " + url)
+    if not validators.url(url):
+        logger.error(f"Invalid URL: {url}")
         return False
 
     session = FuturesSession(executor=ProcessPoolExecutor(max_workers=os.cpu_count()))
     parameters = {"blocking": blocking_cli, "result": RESULT}
-    after_time, before_time = 0, 0
 
-    st = 0
     json_data = json.dumps(data)
-    for t in instance_times:
+    next_time = time.time()
+
+    for IAT in IATs:
+        next_time += IAT
         # st: sleep time
-        st = st + t - (after_time - before_time)
-        before_time = time.time()
+        st = next_time - time.time()
         if st > 0:
             time.sleep(st)
         future = session.post(
@@ -173,7 +173,6 @@ def HTTPInstanceGeneratorGeneric(instance_times, blocking_cli, url, data):
             data=json_data,
             verify=False,
         )
-        after_time = time.time()
 
     return True
 
