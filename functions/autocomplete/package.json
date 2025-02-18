@@ -16,7 +16,7 @@
     "acsetup": "bin/acsetup.js"
   },
   "devDependencies": {
-    "mocha": "^10.1.0"
+    "mocha": "^10.8.2"
   },
   "directories": {
     "lib": "lib",
