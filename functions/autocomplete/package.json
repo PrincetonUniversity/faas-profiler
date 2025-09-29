@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "colors": "^1.1.2",
-    "tmp": "0.0.33"
+    "tmp": "0.2.4"
   },
   "bin": {
     "acsetup": "bin/acsetup.js"
