@@ -31,6 +31,7 @@ jobs:
         ./configure.sh
     - name: Test with unittest
       run: |
+        . venv_faasprofiler/bin/activate
         cd tests/unit_tests/
         chmod +x ./run_tests.sh
         ./run_tests.sh
