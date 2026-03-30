@@ -114,8 +114,8 @@ def CompareArchives(archive_files, plot):
             t_df = test_df[test_df["func_name"] == application_short]
             distribution = config_df[config_df["application"] == application][
                 "distribution"
-            ][0]
-            rate = config_df[config_df["application"] == application]["rate"][0]
+            ].iloc[0]
+            rate = config_df[config_df["application"] == application]["rate"].iloc[0]
 
             t_df["distribution"] = distribution
             t_df["rate"] = rate
